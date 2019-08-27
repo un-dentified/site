@@ -1,37 +1,38 @@
 .container {
-  background: red;
+  background: #f4f4ed;
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-columns: 50px 1fr 50px;
+  grid-template-columns: 5rem 1fr 5rem;
   grid-template-rows: 50% 50%;
 }
 
 .link {
-  background: black;
+  background: #232323;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //  / justify-content: space-between;
+  // /  align-content: center;
 
   &.leftTop {
     grid-column: 1;
     grid-row: 1;
-    background: orchid;
   }
 
   &.leftBottom {
     grid-column: 1;
     grid-row: 2;
-    background: white;
   }
 
   &.rightTop {
     grid-column: 3;
     grid-row: 1;
-    background: yellow;
   }
 
   &.rightBottom {
     grid-column: 3;
     grid-row: 2;
-    background: white;
   }
 }
 
@@ -41,5 +42,10 @@
 }
 
 a {
-  color: black;
+  color: red;
+}
+
+.content {
+  color: #6600cc;
+  padding: 5rem;
 }

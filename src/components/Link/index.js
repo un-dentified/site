@@ -34,25 +34,45 @@ const animateOut = (
 ) => {
   const tl = new TimelineLite()
 
-  tl.to(node, length, {
+  tl.set(node, {}).to(node, length, {
     x,
     y,
   })
 }
 
-const Link = ({ children, moveOutTo, moveInFrom, length, to, className }) => (
+const Link = ({
+  children,
+  moveOutTo,
+  moveInFrom,
+  length,
+  to,
+  className,
+  currentLinks,
+  currentPage,
+  direction,
+}) => (
   <TransitionLink
     className={className}
     entry={{
       length,
-      state: { from: { x: moveInFrom.x, y: moveInFrom.y } },
+      state: {
+        from: {
+          x: moveInFrom.x,
+          y: moveInFrom.y,
+        },
+        prevLinks: currentLinks,
+        prevPage: currentPage,
+        direction,
+      },
       trigger: ({ node, entry }) => {
         animateIn(node, entry)
       },
     }}
     exit={{
       length,
-      state: { to: { x: moveOutTo.x, y: moveOutTo.y } },
+      state: {
+        to: { x: moveOutTo.x, y: moveOutTo.y },
+      },
       trigger: ({ node, exit }) => {
         animateOut(node, exit)
       },
@@ -75,6 +95,9 @@ Link.propTypes = {
   length: PropTypes.number.isRequired,
   to: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
+  direction: PropTypes.number,
+  currentLinks: PropTypes.array.isRequired,
+  currentPage: PropTypes.string,
 }
 
 export default Link
