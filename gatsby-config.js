@@ -9,6 +9,7 @@ module.exports = {
     },
   },
   plugins: [
+    /*
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -23,6 +24,7 @@ module.exports = {
         name: `assets`,
       },
     },
+    */
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -69,6 +71,8 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     "gatsby-plugin-netlify-cms",
+    `gatsby-plugin-sass`,
+    "gatsby-plugin-transition-link",
     {
       resolve: `gatsby-plugin-typography`,
       options: {
