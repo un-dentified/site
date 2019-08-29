@@ -1,0 +1,17 @@
+.footer {
+  display: flex;
+  background: gray;
+  justify-content: stretch;
+  align-items: flex-end;
+}
+
+.linksContainer {
+  flex-grow: 1;
+  flex-basis: min-content;
+}
+
+.contactForm {
+  background: black;
+  flex-basis: min-content;
+  flex-grow: 1;
+}
