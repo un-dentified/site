@@ -11,61 +11,82 @@
   display: grid;
   grid-template-columns: 5rem 1fr 5rem;
   grid-template-rows: 1fr 1fr;
-  opacity: 0;
-  background: gray;
+  opacity: 1;
 }
 
 .link {
   background: transparent;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  background: red;
+  justify-content: space-between;
+  padding: 8rem 0;
+  background: black;
+
+  .arrow {
+    pointer-events: none;
+  }
+
+  p {
+    font-family: prohibition, sans-serif;
+    font-weight: 400;
+    font-size: 4rem;
+    display: inline-block;
+    pointer-events: none;
+    color: white;
+  }
+
+  &:hover {
+    background: $color-purple-main;
+
+    &.invert {
+      p {
+        color: white;
+      }
+      .arrow {
+        * {
+          fill: white;
+        }
+      }
+    }
+  }
 }
 
 .leftTop {
   grid-column: 1;
   grid-row: 1;
-  background: black;
 
-  .linkContent {
-    p {
-      @include rotateLHS;
-    }
+  p {
+    @include rotateLHS;
   }
 
   .arrow {
-    // @include rotateArrow(-45deg);
+    @include rotateArrow(-45deg);
   }
 }
 
 .leftBottom {
   grid-column: 1;
   grid-row: 2;
-  .linkContent {
-    p {
-      //    // @include rotateLHS;
-    }
+
+  p {
+    @include rotateLHS;
   }
   .arrow {
-    // @include rotateArrow(-135deg);
+    @include rotateArrow(-135deg);
   }
 }
 
 .rightTop {
   grid-column: 3;
   grid-row: 1;
-  background: yellow;
 
-  .linkContent {
-    p {
-      //    @include rotateRHS;
-    }
+  p {
+    @include rotateRHS;
   }
-
   .arrow {
-    //  @include rotateArrow(45deg);
+    @include rotateArrow(45deg);
   }
 }
 
@@ -73,31 +94,11 @@
   grid-column: 3;
   grid-row: 2;
 
-  .linkContent {
-    p {
-      // @include rotateRHS;
-    }
+  p {
+    @include rotateRHS;
   }
   .arrow {
-    // @include rotateArrow(135deg);
-  }
-}
-
-.linkContent {
-  padding: 0rem 0;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  font-family: prohibition, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-
-  p {
-    color: black;
-    font-size: 1rem;
-    pointer-events: none;
+    @include rotateArrow(135deg);
   }
 }
 
@@ -106,17 +107,14 @@
   grid-row: 1/-1;
 }
 
-.arrow {
-  pointer-events: none;
-}
-
-/*
 @media only screen and (max-width: 600px) {
   .container {
     grid-template-columns: 3rem 1fr 3rem;
   }
 
-  .linkContent {
+  .link {
+    padding: 10rem 0;
+
     p {
       font-size: 2rem;
     }
@@ -124,14 +122,22 @@
 
   .arrow {
     display: none;
-    order: -1;
   }
 
   .rightBottom,
   .leftBottom {
-    .linkContent {
-      flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+}
+
+.invert {
+  background: white;
+  p {
+    color: black;
+  }
+  .arrow {
+    * {
+      fill: black;
     }
   }
 }
-*/

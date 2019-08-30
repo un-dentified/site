@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, createRef } from "react"
 import Link from "../Link"
 import styles from "./style.module.scss"
 import { TweenMax } from "gsap"
@@ -6,6 +6,7 @@ import Arrow from "../Arrow"
 
 export default class Index extends Component {
   currentTimeOut
+  containerRef = createRef()
 
   constructor(props) {
     super(props)
@@ -23,17 +24,10 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    TweenMax.set(`.${styles.container}`, {
-      opacity: 1,
-      //  background: this.props.background,
-    })
-
-    /*
-    TweenMax.to(`.${styles.linkContent}`, 1.5, {
+    TweenMax.to(`.${styles.link} > *`, 1.5, {
       opacity: 0,
       delay: 3.5,
     })
-    */
   }
 
   updateLinkOrder = (prevLinks, prevPage, direction, defaultLinks) => {
@@ -53,18 +47,23 @@ export default class Index extends Component {
 
   handleHover = e => {
     TweenMax.killTweensOf(e.target)
+    /*
+    console.log(e.target)
 
     TweenMax.to(e.target, 0.4, {
       opacity: 1,
       background: "#2a094e",
     })
+    */
   }
 
   handleLeave = e => {
+    /*
     TweenMax.to(e.target, 0.4, {
       opacity: 0,
       background: "black",
     })
+    */
   }
 
   toggleMenu = () => {
@@ -104,89 +103,67 @@ export default class Index extends Component {
   }
 
   render() {
-    const { currentPage, children } = this.props
+    const { currentPage, children, invertLinkColor } = this.props
     const { links } = this.state
+
+    const linkClassName = invertLinkColor ? `${styles["invert"]}` : ""
 
     return (
       <>
-        <div className={`${styles.container} `}>
+        <div ref={this.containerRef} className={`${styles.container} `}>
           <Link
             to={`/${links[0]}`}
             currentLinks={links}
             currentPage={currentPage}
             direction={0}
-            className={`${styles.link} ${styles.leftTop}`}
+            className={`${styles.link} ${styles.leftTop} ${linkClassName}`}
             moveInFrom={{ x: "-100%", y: "-50%" }}
             moveOutTo={{ x: "100%", y: "50%" }}
             length={1.3}
           >
-            <div
-              onMouseEnter={this.handleHover}
-              onMouseLeave={this.handleLeave}
-              className={styles.linkContent}
-            >
-              <p>{links[0] || "home"}</p>
-              <Arrow className={styles.arrow} />
-            </div>
+            <p>{links[0] || "home"}</p>
+            <Arrow className={styles.arrow} />
           </Link>
           <Link
             to={`/${links[1]}`}
             currentLinks={links}
-            className={`${styles.link} ${styles.leftBottom}`}
+            className={`${styles.link} ${styles.leftBottom} ${linkClassName}`}
             currentPage={currentPage}
             direction={1}
             moveInFrom={{ x: "-100%", y: "50%" }}
             moveOutTo={{ x: "100%", y: "-50%" }}
             length={1.3}
           >
-            <div
-              onMouseEnter={this.handleHover}
-              onMouseLeave={this.handleLeave}
-              className={styles.linkContent}
-            >
-              <Arrow className={styles.arrow} />
-              <p>{links[1] || "home"}</p>
-            </div>
+            <Arrow className={styles.arrow} />
+            <p>{links[1] || "home"}</p>
           </Link>
 
           <Link
             to={`/${links[2]}`}
             currentLinks={links}
             currentPage={currentPage}
-            className={`${styles.link} ${styles.rightTop}`}
+            className={`${styles.link} ${styles.rightTop} ${linkClassName}`}
             direction={2}
             moveInFrom={{ x: "100%", y: "-50%" }}
             moveOutTo={{ x: "-100%", y: "50%" }}
             length={1.3}
           >
-            <div
-              onMouseEnter={this.handleHover}
-              onMouseLeave={this.handleLeave}
-              className={styles.linkContent}
-            >
-              <p>{links[2] || "home"}</p>
-              <Arrow className={styles.arrow} />
-            </div>
+            <p>{links[2] || "home"}</p>
+            <Arrow className={styles.arrow} />
           </Link>
 
           <Link
             to={`/${links[3]}`}
             currentLinks={links}
             currentPage={currentPage}
-            className={`${styles.link} ${styles.rightBottom}`}
+            className={`${styles.link} ${styles.rightBottom} ${linkClassName}`}
             direction={3}
             moveInFrom={{ x: "100%", y: "50%" }}
             moveOutTo={{ x: "-100%", y: "-50%" }}
             length={1.3}
           >
-            <div
-              onMouseEnter={this.handleHover}
-              onMouseLeave={this.handleLeave}
-              className={styles.linkContent}
-            >
-              <Arrow className={styles.arrow} />
-              <p>{links[3] || "home"}</p>
-            </div>
+            <Arrow className={styles.arrow} />
+            <p>{links[3] || "home"}</p>
           </Link>
         </div>
       </>
