@@ -45,27 +45,6 @@ export default class Index extends Component {
     }
   }
 
-  handleHover = e => {
-    TweenMax.killTweensOf(e.target)
-    /*
-    console.log(e.target)
-
-    TweenMax.to(e.target, 0.4, {
-      opacity: 1,
-      background: "#2a094e",
-    })
-    */
-  }
-
-  handleLeave = e => {
-    /*
-    TweenMax.to(e.target, 0.4, {
-      opacity: 0,
-      background: "black",
-    })
-    */
-  }
-
   toggleMenu = () => {
     this.setState(
       prevState => {
