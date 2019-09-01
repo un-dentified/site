@@ -1,7 +1,7 @@
 import React from "react"
 import TransitionLink from "gatsby-plugin-transition-link"
 import PropTypes from "prop-types"
-import { TimelineLite } from "gsap"
+import { TimelineLite, TweenMax } from "gsap"
 
 const animateIn = (
   node,
@@ -14,13 +14,9 @@ const animateIn = (
 ) => {
   const tl = new TimelineLite()
 
-  tl.set(node, {
-    x,
-    y,
-  }).to(node, length, {
-    x: 0,
-    y: 0,
-  })
+  console.log(node.firstChild.children[0], x, y)
+
+  tl.fromTo(node.firstChild, length, { x, y }, { x: `-=${x}`, y: `-=${y}` })
 }
 
 const animateOut = (
@@ -34,7 +30,7 @@ const animateOut = (
 ) => {
   const tl = new TimelineLite()
 
-  tl.set(node, {}).to(node, length, {
+  tl.to(node.firstChild, length, {
     x,
     y,
   })
@@ -42,14 +38,14 @@ const animateOut = (
 
 const Link = ({
   children,
-  moveOutTo,
   moveInFrom,
+  moveOutTo,
   length,
   to,
-  className,
   currentLinks,
   currentPage,
   direction,
+  className,
 }) => (
   <TransitionLink
     className={className}
@@ -65,6 +61,7 @@ const Link = ({
         direction,
       },
       trigger: ({ node, entry }) => {
+        console.log("TRIG")
         animateIn(node, entry)
       },
     }}
@@ -94,10 +91,10 @@ Link.propTypes = {
   }),
   length: PropTypes.number.isRequired,
   to: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
   direction: PropTypes.number,
   currentLinks: PropTypes.array.isRequired,
   currentPage: PropTypes.string,
+  className: PropTypes.string,
 }
 
 export default Link
