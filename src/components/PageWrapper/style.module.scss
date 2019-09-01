@@ -4,25 +4,47 @@
 
 .container {
   position: fixed;
+  max-width: 100%;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   display: grid;
+  max-height: 100%;
+  min-height: 300px;
+  min-width: 300px;
   grid-template-columns: 5rem 1fr 5rem;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 7rem 1fr 1fr 7rem;
   opacity: 1;
 }
 
 .link {
-  background: transparent;
   box-shadow: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: 8rem 0;
   background: black;
+  position: relative;
+
+  &.invert {
+    background: white;
+
+    p {
+      color: black;
+    }
+    .arrow {
+      * {
+        fill: black;
+      }
+    }
+  }
+
+  &.transparent {
+    background: rgba(black, 0.3);
+  }
 
   .arrow {
     pointer-events: none;
@@ -37,8 +59,20 @@
     color: white;
   }
 
+  & > p,
+  .arrow {
+    animation: fadeOut 2s 2s 1 forwards;
+  }
+
   &:hover {
     background: $color-purple-main;
+
+    & p,
+    .arrow {
+      animation: fadeIn 4s 1 reverse backwards;
+
+      opacity: 1;
+    }
 
     &.invert {
       p {
@@ -55,7 +89,7 @@
 
 .leftTop {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 1 / span 2;
 
   p {
     @include rotateLHS;
@@ -68,7 +102,7 @@
 
 .leftBottom {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 3 / span 2;
 
   p {
     @include rotateLHS;
@@ -80,7 +114,7 @@
 
 .rightTop {
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 1 / span 2;
 
   p {
     @include rotateRHS;
@@ -92,7 +126,7 @@
 
 .rightBottom {
   grid-column: 3;
-  grid-row: 2;
+  grid-row: 3 / span 2;
 
   p {
     @include rotateRHS;
@@ -103,20 +137,73 @@
 }
 
 .content {
-  grid-column: 2;
+  grid-column: 1/-1;
   grid-row: 1/-1;
+  position: relative;
+}
+
+.toggle {
+  height: 6rem;
+  position: absolute;
+  background: rgba(black, 0.5);
+  top: 0;
+  margin: 0 5rem;
+  right: 0;
+  left: 0;
+  opacity: 1;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.toggleMenu {
+  width: 4rem;
+  height: 4rem;
+
+  background: transparent;
+  border: none;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  30% {
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  0% {
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @media only screen and (max-width: 600px) {
   .container {
-    grid-template-columns: 3rem 1fr 3rem;
+    grid-template-columns: 4rem 1fr 4rem;
   }
 
   .link {
-    padding: 10rem 0;
+    position: relative;
+    justify-content: space-around;
+    padding: 0;
 
     p {
-      font-size: 2rem;
+      font-size: 3rem;
+      transform: none;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      color: white;
+    }
+    & > p,
+    .arrow {
+      animation: none;
     }
   }
 
@@ -130,14 +217,65 @@
   }
 }
 
-.invert {
-  background: white;
-  p {
-    color: black;
+@media (orientation: landscape) and (max-width: 900px) and (max-height: 800px) {
+  .link {
+    justify-content: flex-start;
+    padding: 0;
+    padding-top: 2rem;
+
+    &.transparent {
+      background: black;
+    }
+
+    .arrow {
+      display: none;
+    }
+
+    p {
+      font-size: 2rem;
+      transform: none;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      color: white;
+    }
   }
+}
+
+@media (orientation: landscape) and (max-height: 700px) {
   .arrow {
-    * {
-      fill: black;
+    display: none;
+  }
+  .link {
+    padding: 0;
+
+    p {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (hover: none) {
+  .link {
+    justify-content: center;
+
+    .arrow {
+      margin: 5rem 0;
+    }
+
+    & > p,
+    .arrow {
+      animation: none;
+    }
+  }
+}
+@media (max-height: 500px) {
+  .link {
+    &.transparent {
+      background: black;
+    }
+
+    p {
+      font-size: 1.5rem;
     }
   }
 }

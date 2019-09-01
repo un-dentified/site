@@ -1,8 +1,9 @@
 import React, { Component, createRef } from "react"
 import Link from "../Link"
 import styles from "./style.module.scss"
-import { TweenMax } from "gsap"
+import { TimelineMax, TimelineLite, TweenLite } from "gsap"
 import Arrow from "../Arrow"
+import Footer from "../Footer"
 
 export default class Index extends Component {
   currentTimeOut
@@ -23,13 +24,6 @@ export default class Index extends Component {
     }
   }
 
-  componentDidMount() {
-    TweenMax.to(`.${styles.link} > *`, 1.5, {
-      opacity: 0,
-      delay: 3.5,
-    })
-  }
-
   updateLinkOrder = (prevLinks, prevPage, direction, defaultLinks) => {
     switch (direction) {
       case 0:
@@ -45,6 +39,10 @@ export default class Index extends Component {
     }
   }
 
+  componentDidUpdate(prevprops, prevState) {
+    console.log()
+  }
+
   toggleMenu = () => {
     this.setState(
       prevState => {
@@ -53,28 +51,36 @@ export default class Index extends Component {
         }
       },
       () => {
+        const tl = new TimelineMax()
+
         if (!this.state.menuOpen) {
-          TweenMax.staggerTo(
+          tl.to("#spin", 0.5, {
+            rotation: "45",
+          }).staggerTo(
             `.${styles.link}`,
-            0.5,
+            0.15,
             {
               cycle: {
                 scaleX: [0],
                 transformOrigin: ["0 0", "0 0", "100%  100%", "100% 100%"],
               },
             },
-            0.25
+            0,
+            "-=0.2"
           )
         } else {
-          TweenMax.staggerTo(
+          tl.to("#spin", 0.5, {
+            rotation: "0",
+          }).staggerTo(
             `.${styles.link}`,
-            0.5,
+            0.15,
             {
               cycle: {
                 scaleX: [1],
               },
             },
-            0.25
+            0,
+            "-=0.2"
           )
         }
       }
@@ -82,70 +88,78 @@ export default class Index extends Component {
   }
 
   render() {
-    const { currentPage, children, invertLinkColor } = this.props
-    const { links } = this.state
+    const {
+      currentPage,
+      children,
+      invertLinkColor,
+      transparentLinks,
+    } = this.props
+    const { links, menuOpen } = this.state
 
-    const linkClassName = invertLinkColor ? `${styles["invert"]}` : ""
+    const invert = invertLinkColor ? `${styles["invert"]}` : ""
+    const transparent = transparentLinks ? `${styles["transparent"]}` : ""
 
     return (
-      <>
-        <div ref={this.containerRef} className={`${styles.container} `}>
-          <Link
-            to={`/${links[0]}`}
-            currentLinks={links}
-            currentPage={currentPage}
-            direction={0}
-            className={`${styles.link} ${styles.leftTop} ${linkClassName}`}
-            moveInFrom={{ x: "-100%", y: "-50%" }}
-            moveOutTo={{ x: "100%", y: "50%" }}
-            length={1.3}
-          >
-            <p>{links[0] || "home"}</p>
-            <Arrow className={styles.arrow} />
-          </Link>
-          <Link
-            to={`/${links[1]}`}
-            currentLinks={links}
-            className={`${styles.link} ${styles.leftBottom} ${linkClassName}`}
-            currentPage={currentPage}
-            direction={1}
-            moveInFrom={{ x: "-100%", y: "50%" }}
-            moveOutTo={{ x: "100%", y: "-50%" }}
-            length={1.3}
-          >
-            <Arrow className={styles.arrow} />
-            <p>{links[1] || "home"}</p>
-          </Link>
+      <div ref={this.containerRef} className={`${styles.container} `}>
+        <div className={styles.content}>{children}</div>
 
-          <Link
-            to={`/${links[2]}`}
-            currentLinks={links}
-            currentPage={currentPage}
-            className={`${styles.link} ${styles.rightTop} ${linkClassName}`}
-            direction={2}
-            moveInFrom={{ x: "100%", y: "-50%" }}
-            moveOutTo={{ x: "-100%", y: "50%" }}
-            length={1.3}
-          >
-            <p>{links[2] || "home"}</p>
-            <Arrow className={styles.arrow} />
-          </Link>
+        <Footer menuOpen={menuOpen} toggleMenu={this.toggleMenu} />
 
-          <Link
-            to={`/${links[3]}`}
-            currentLinks={links}
-            currentPage={currentPage}
-            className={`${styles.link} ${styles.rightBottom} ${linkClassName}`}
-            direction={3}
-            moveInFrom={{ x: "100%", y: "50%" }}
-            moveOutTo={{ x: "-100%", y: "-50%" }}
-            length={1.3}
-          >
-            <Arrow className={styles.arrow} />
-            <p>{links[3] || "home"}</p>
-          </Link>
-        </div>
-      </>
+        <Link
+          to={`/${links[0]}`}
+          currentLinks={links}
+          currentPage={currentPage}
+          direction={0}
+          className={`${styles.link} ${styles.leftTop} ${invert} ${transparent} `}
+          moveInFrom={{ x: "-100%", y: "-50%" }}
+          moveOutTo={{ x: "100%", y: "50%" }}
+          length={1.2}
+        >
+          <p>{links[0] || "home"}</p>
+          <Arrow className={styles.arrow} />
+        </Link>
+        <Link
+          to={`/${links[1]}`}
+          currentLinks={links}
+          className={`${styles.link} ${styles.leftBottom} ${invert} ${transparent} `}
+          currentPage={currentPage}
+          direction={1}
+          moveInFrom={{ x: "-100%", y: "50%" }}
+          moveOutTo={{ x: "100%", y: "-50%" }}
+          length={1.2}
+        >
+          <Arrow className={styles.arrow} />
+          <p>{links[1] || "home"}</p>
+        </Link>
+
+        <Link
+          to={`/${links[2]}`}
+          currentLinks={links}
+          currentPage={currentPage}
+          className={`${styles.link} ${styles.rightTop} ${invert} ${transparent} `}
+          direction={2}
+          moveInFrom={{ x: "100%", y: "-50%" }}
+          moveOutTo={{ x: "-100%", y: "50%" }}
+          length={1.2}
+        >
+          <p>{links[2] || "home"}</p>
+          <Arrow className={styles.arrow} />
+        </Link>
+
+        <Link
+          to={`/${links[3]}`}
+          currentLinks={links}
+          currentPage={currentPage}
+          className={`${styles.link} ${styles.rightBottom} ${invert} ${transparent} `}
+          direction={3}
+          moveInFrom={{ x: "100%", y: "50%" }}
+          moveOutTo={{ x: "-100%", y: "-50%" }}
+          length={1.2}
+        >
+          <Arrow className={styles.arrow} />
+          <p>{links[3] || "home"}</p>
+        </Link>
+      </div>
     )
   }
 }
