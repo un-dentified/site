@@ -1,4 +1,5 @@
 import React, { Component, createRef } from "react"
+import Form from "./form"
 import styles from "./style.module.scss"
 import { TimelineLite, Power0 } from "gsap"
 
@@ -6,43 +7,15 @@ export default class Contact extends Component {
   textRef = createRef()
   wrapperRef = createRef()
   btnRef = createRef()
-  firstInputRef = createRef()
-  lastInputRef = createRef()
   formRef = createRef()
 
   state = {
-    values: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
-    errors: {
-      name: null,
-      email: null,
-      subject: null,
-      message: null,
-    },
-    touched: {
-      name: false,
-      email: false,
-      subject: false,
-      message: false,
-    },
-    visited: {
-      name: false,
-      email: false,
-      subject: false,
-      message: false,
-    },
     formOpen: false,
-    formVisible: false,
   }
 
   toggleForm = () => {
     this.setState(prevState => ({
       formOpen: !prevState.formOpen,
-      formVisible: true,
     }))
   }
 
@@ -70,8 +43,8 @@ export default class Contact extends Component {
       master.addLabel("start")
       let current = [this.wrapperRef.current, this.textRef.current]
 
-      if (this.state.formOpen) {
-        this.firstInputRef.current.focus()
+      if (!this.state.formOpen) {
+        this.btnRef.current.focus()
       }
 
       if (this.state.formOpen) {
@@ -94,9 +67,6 @@ export default class Contact extends Component {
           0.1,
           {
             opacity: 0,
-            onComplete: () => {
-              this.btnRef.current.focus()
-            },
           },
           "start"
         )
@@ -135,37 +105,12 @@ export default class Contact extends Component {
     }
   }
 
-  focusTrap = event => {
-    if (event.keyCode === 9 && this.state.formVisible) {
-      if (
-        document.activeElement === this.lastInputRef.current &&
-        !event.shiftKey
-      ) {
-        event.preventDefault()
-
-        this.btnRef.current.focus()
-      }
-
-      if (document.activeElement === this.btnRef.current) {
-        if (!event.shiftKey) {
-          this.firstInputRef.current.focus()
-        } else {
-          this.lastInputRef.current.focus()
-        }
-        event.preventDefault()
-      }
-    }
-    if (event.keyCode === 27 && this.state.formVisible) {
-      this.btnRef.current.focus()
-      this.toggleForm()
-    }
-  }
+  setVisited
 
   render() {
     const { invert } = this.props
     const invertClass = invert ? styles["invert"] : ""
     const formOpenClass = this.state.formOpen ? `${styles.formOpen}` : ""
-    console.log(invertClass)
 
     return (
       <div className={`${styles.wrapper} ${invertClass}`}>
@@ -231,51 +176,11 @@ export default class Contact extends Component {
 
         <div
           ref={this.wrapperRef}
-          className={`${styles.formWrapper} ${invertClass} ${formOpenClass}`}
+          className={`${styles.formWrapper} ${invertClass} ${formOpenClass} `}
         ></div>
         <div ref={this.formRef} className={styles.form}>
-          {this.state.formVisible && (
-            <form className={styles.formContainer}>
-              <div className={styles.field}>
-                <label className={styles.label}>Name:</label>
-                <input
-                  ref={this.firstInputRef}
-                  name="name"
-                  className={styles.input}
-                  placeholder="Name"
-                />
-                <p>Exercitationem recusandae eaque inventore ratione.</p>
-              </div>
-
-              <div className={styles.field}>
-                <label className={styles.label}>Name:</label>
-                <input
-                  name="email"
-                  className={styles.input}
-                  placeholder="Email"
-                />{" "}
-                <p>Exercitationem recusandae eaque inventore ratione.</p>
-              </div>
-
-              <div className={styles.field}>
-                <label className={styles.label}>Name:</label>
-                <input
-                  name="subject"
-                  className={styles.input}
-                  placeholder="Subject"
-                />
-                <p>Exercitationem recusandae eaque inventore ratione.</p>
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label}>Message</label>
-                <textarea
-                  ref={this.lastInputRef}
-                  name="message"
-                  placholder="message"
-                />{" "}
-                <p>Exercitationem recusandae eaque inventore ratione.</p>
-              </div>
-            </form>
+          {this.state.formOpen && (
+            <Form invert={invert} toggleForm={this.toggleForm} />
           )}
         </div>
       </div>

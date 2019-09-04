@@ -1,0 +1,133 @@
+@import "../../../scss/variables/colors.scss";
+
+.field {
+  width: 100%;
+  position: relative;
+  padding: 2rem 5rem 4rem 5rem;
+  pointer-events: all;
+
+  &.visited {
+    .label {
+      transform: translate(-2rem, -3rem);
+    }
+  }
+
+  .label {
+    font-size: 2rem;
+    position: absolute;
+    top: 2rem;
+    left: 7rem;
+    color: white;
+    transition: transform 0.5s;
+  }
+
+  input {
+    width: inherit;
+    display: block;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    padding: 1rem 1rem;
+    color: white;
+    background: transparent;
+    border: 1px solid rgba(white, 0.6);
+    border-radius: 5px;
+
+    &::placeholder {
+      opacity: 0;
+    }
+    &:focus {
+      outline: 1px solid white;
+      background: transparent;
+    }
+  }
+  .textArea {
+    display: inline-block;
+    width: 100%;
+    font-size: 1.5rem;
+    border: 1px solid black;
+    color: black;
+    min-height: 10rem;
+    color: white;
+    background: transparent;
+    border: 1px solid rgba(white, 0.6);
+    border-radius: 5px;
+    resize: none;
+
+    &:focus {
+      outline: 1px solid white;
+      background: transparent;
+    }
+  }
+
+  .error {
+    color: red;
+  }
+
+  .errorMsg {
+    position: absolute;
+    bottom: 0;
+    left: 5rem;
+  }
+
+  &.invert {
+    .label {
+      color: black;
+    }
+
+    .input {
+      color: black;
+      border: 1px solid rgba(black, 0.5);
+
+      &:focus {
+        outline: 1px solid black;
+      }
+    }
+
+    .textArea {
+      color: black;
+      border: 1px solid rgba(black, 0.5);
+      &:focus {
+        outline: 1px solid black;
+      }
+    }
+  }
+
+  &.error {
+    .textArea,
+    .input {
+      border: 1px solid red;
+    }
+
+    .label {
+      color: red;
+    }
+  }
+}
+
+.submit {
+  pointer-events: all;
+
+  transform: translateX(300px);
+}
+
+@media only screen and (max-width: 900px) {
+  .field {
+    padding-top: 1rem;
+
+    .input {
+      padding: 1rem 0;
+      font-size: 1rem;
+    }
+    .label {
+      top: 1rem;
+    }
+    .textArea {
+      font-size: 1rem;
+      min-height: 6rem;
+    }
+    .errorMsg {
+      top: 60%;
+      left: 5rem;
+    }
+  }
+}
