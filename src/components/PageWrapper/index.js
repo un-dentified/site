@@ -4,6 +4,7 @@ import styles from "./style.module.scss"
 import { TimelineMax, TimelineLite, TweenLite } from "gsap"
 import Arrow from "../Arrow"
 import Footer from "../Footer"
+import { throttle } from "lodash"
 
 export default class Index extends Component {
   currentTimeOut
@@ -14,6 +15,8 @@ export default class Index extends Component {
 
     const { defaultLinks } = this.props
     const { prevLinks, prevPage, direction } = this.props.entry.state
+
+    this.handleResize = throttle(this.handleResize, 200)
 
     this.state = {
       menuOpen: true,
@@ -39,11 +42,7 @@ export default class Index extends Component {
     }
   }
 
-  componentDidUpdate(prevprops, prevState) {
-    console.log()
-  }
-
-  toggleMenu = () => {
+  toggleMenu = cbScene => {
     this.setState(
       prevState => {
         return {
@@ -87,30 +86,45 @@ export default class Index extends Component {
     )
   }
 
+  handleResize = () => {
+    this.setState(prevState => {
+      if (!prevState.menuOpen) {
+        this.toggleMenu()
+      }
+      return null
+    })
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize)
+  }
+
   render() {
-    const {
-      currentPage,
-      children,
-      invertLinkColor,
-      transparentLinks,
-    } = this.props
+    const { currentPage, children, invertLinkColor } = this.props
     const { links, menuOpen } = this.state
 
     const invert = invertLinkColor ? `${styles["invert"]}` : ""
-    const transparent = transparentLinks ? `${styles["transparent"]}` : ""
 
     return (
       <div ref={this.containerRef} className={`${styles.container} `}>
         <div className={styles.content}>{children}</div>
 
-        <Footer menuOpen={menuOpen} toggleMenu={this.toggleMenu} />
+        <Footer
+          invert={!!invert}
+          menuOpen={menuOpen}
+          toggleMenu={this.toggleMenu}
+        />
 
         <Link
           to={`/${links[0]}`}
           currentLinks={links}
           currentPage={currentPage}
           direction={0}
-          className={`${styles.link} ${styles.leftTop} ${invert} ${transparent} `}
+          className={`${styles.link} ${styles.leftTop} ${invert}  `}
           moveInFrom={{ x: "-100%", y: "-50%" }}
           moveOutTo={{ x: "100%", y: "50%" }}
           length={1.2}
@@ -121,7 +135,7 @@ export default class Index extends Component {
         <Link
           to={`/${links[1]}`}
           currentLinks={links}
-          className={`${styles.link} ${styles.leftBottom} ${invert} ${transparent} `}
+          className={`${styles.link} ${styles.leftBottom} ${invert}  `}
           currentPage={currentPage}
           direction={1}
           moveInFrom={{ x: "-100%", y: "50%" }}
@@ -136,7 +150,7 @@ export default class Index extends Component {
           to={`/${links[2]}`}
           currentLinks={links}
           currentPage={currentPage}
-          className={`${styles.link} ${styles.rightTop} ${invert} ${transparent} `}
+          className={`${styles.link} ${styles.rightTop} ${invert}  `}
           direction={2}
           moveInFrom={{ x: "100%", y: "-50%" }}
           moveOutTo={{ x: "-100%", y: "50%" }}
@@ -150,7 +164,7 @@ export default class Index extends Component {
           to={`/${links[3]}`}
           currentLinks={links}
           currentPage={currentPage}
-          className={`${styles.link} ${styles.rightBottom} ${invert} ${transparent} `}
+          className={`${styles.link} ${styles.rightBottom} ${invert}  `}
           direction={3}
           moveInFrom={{ x: "100%", y: "50%" }}
           moveOutTo={{ x: "-100%", y: "-50%" }}

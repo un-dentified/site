@@ -128,9 +128,9 @@ export default class FormLogic extends Component {
         })
       })
     ).then(errorArray => {
-      const errors = errorArray.reduce((acc, current, index) => {
-        if (!!current) {
-          acc[errorKeys[index]] = current
+      const errors = errorKeys.reduce((acc, current, index) => {
+        if (!!errorArray[index]) {
+          acc[current] = errorArray[index]
         }
         return acc
       }, {})
@@ -138,9 +138,14 @@ export default class FormLogic extends Component {
       this.setState(
         {
           errors,
+          touched: errorKeys.reduce((acc, key) => {
+            acc[key] = true
+            return acc
+          }, {}),
         },
         () => {
-          if (Object.keys(this.state.erros).lengh === 0) {
+          console.log(this.state.errors)
+          if (Object.keys(this.state.errors).length === 0) {
             this.props.submitFn(this.state.values)
           } else {
             console.warn("clear errors before submitting")

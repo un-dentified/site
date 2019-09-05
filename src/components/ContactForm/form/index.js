@@ -68,20 +68,25 @@ export default class Form extends Component {
   }
 
   submitFn = values => {
-    const url = "http://localhost:9000/sendMail"
+    const url = "/.netlify/functions/sendmail"
 
     return fetch(url, {
       method: "POST",
-      mode: "cors",
       cache: "no-cache",
-      credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
       },
       redirect: "follow",
       referrer: "no-referrer",
       body: JSON.stringify(values),
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
+      .then(re => {
+        console.log(re)
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
 
   render() {
@@ -120,7 +125,7 @@ export default class Form extends Component {
               <div
                 className={`${styles.field} ${invertClass} ${
                   visited["name"] ? styles.visited : ""
-                } ${errors["name"] ? styles.error : ""}`}
+                } ${errors["name"] && touched["name"] ? styles.error : ""}`}
               >
                 <label className={styles.label}>Name:</label>
                 <input
@@ -144,7 +149,7 @@ export default class Form extends Component {
               <div
                 className={`${styles.field} ${invertClass}  ${
                   visited["email"] ? styles.visited : ""
-                }  ${errors["email"] ? styles.error : ""}`}
+                }  ${errors["email"] && touched["email"] ? styles.error : ""}`}
               >
                 <label className={styles.label}>Email</label>
                 <input
@@ -167,7 +172,9 @@ export default class Form extends Component {
               <div
                 className={`${styles.field} ${invertClass} ${
                   visited["subject"] ? styles.visited : ""
-                }  ${errors["subject"] ? styles.error : ""}`}
+                }  ${
+                  errors["subject"] && touched["subject"] ? styles.error : ""
+                }`}
               >
                 <label className={styles.label}>Name:</label>
                 <input
@@ -189,7 +196,9 @@ export default class Form extends Component {
               <div
                 className={`${styles.field} ${invertClass} ${
                   visited["message"] ? styles.visited : ""
-                }  ${errors["message"] ? styles.error : ""}`}
+                }  ${
+                  errors["message"] && touched["message"] ? styles.error : ""
+                }`}
               >
                 <label className={styles.label}>Message</label>
                 <textarea
