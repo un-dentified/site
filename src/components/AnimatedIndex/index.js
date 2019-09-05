@@ -15,7 +15,7 @@ import {
 } from "three"
 import styles from "./style.module.scss"
 import Footer from '../Footer'
-import videoSrc from "../../../public/video/intro.mp4"
+import videoSrc from "./intro.mp4"
 
 const fragmentShader = `uniform vec2 res;
 uniform sampler2D bufferTexture;
