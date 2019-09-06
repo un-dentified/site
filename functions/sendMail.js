@@ -47,6 +47,3 @@ exports.handler = function(event, context, callback) {
     }
   })
 }
-
-
-git filter-branch --force --index-filter "git rm --cached --ignore-unmatch ./functions/sendMail.js" --prune-empty --tag-name-filter cat -- --all
