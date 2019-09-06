@@ -34,7 +34,7 @@ collections:
       - { label: "Cover", name: "cover", widget: "image", required: true }
       - { label: "Body", name: "body", widget: "markdown", required: true }
       - { label: "Url", name: "url", widget: "string", required: true }
-   - name: "shows"
+  - name: "shows"
     label: "shows"
     folder: "content/shows"
     create: true
