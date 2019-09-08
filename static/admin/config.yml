@@ -11,8 +11,8 @@ collections:
   - name: "about"
     label: "about"
     folder: "content/about"
-    create: true
-    delete: true
+    create: false
+    delete: false
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: false
