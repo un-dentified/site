@@ -11,11 +11,13 @@ collections:
   - name: "about"
     label: "about"
     folder: "content/about"
-    create: true
+    create: false
+    delete: false
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: false
     fields:
+      - {label: "Type", name: "Type", widget: "hidden", default: "about"}
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Description", name: "description", widget: "string" }
@@ -29,6 +31,7 @@ collections:
     editor:
       preview: false
     fields:
+      - {label: "Type", name: "Type", widget: "hidden", default: "music"}
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Cover", name: "cover", widget: "image", required: true }
@@ -42,6 +45,7 @@ collections:
     editor:
       preview: false
     fields:
+      - {label: "Type", name: "Type", widget: "hidden", default: "shows"}
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Image", name: "Image", widget: "image", required: true }
