@@ -1,0 +1,40 @@
+button {
+  margin-left: 20rem;
+}
+/* NON BROWSER SPECIFIC*/
+progress {
+  /* RESETS */
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+
+  display: block;
+
+  width: 300px;
+  height: 15px;
+  border-radius: 20px;
+  background-color: #777;
+  color: rgb(20, 240, 221);
+}
+
+/* WEBKIT BROWSERS - CHROME, OPERA AND SAFARI */
+progress::-webkit-progress-bar {
+  background-color: #777;
+  border-radius: 20px;
+  display: block;
+}
+
+progress::-webkit-progress-value {
+  background-color: rgb(20, 240, 221);
+  border-radius: 20px;
+  display: block;
+}
+
+/* MOZILLA FIREFOX */
+progress::-moz-progress-bar {
+  background-color: rgb(20, 240, 221);
+  border-radius: 20px;
+  display: block;
+}
