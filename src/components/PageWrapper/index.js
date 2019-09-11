@@ -4,16 +4,17 @@ import styles from "./style.module.scss"
 import { TimelineMax } from "gsap"
 import Arrow from "../Arrow"
 import Footer from "../Footer"
+import Link from "../Link"
 import { throttle } from "lodash"
 import Loadable from "react-loadable"
-
+/*
 const Link = Loadable({
   loader: () => import("../Link"),
   loading() {
     return <span />
   },
 })
-
+*/
 export default class Index extends Component {
   currentTimeOut
   containerRef = createRef()
