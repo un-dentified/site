@@ -18,16 +18,6 @@ exports.createPages = ({ actions: { createPage }, graphql, reporter }) => {
           }
         }
       }
-      shows: allMarkdownRemark(
-        filter: { frontmatter: { Type: { eq: "shows" } } }
-        sort: { fields: [frontmatter___date], order: DESC }
-      ) {
-        edges {
-          node {
-            id
-          }
-        }
-      }
     }
   `)
     .then(result => {
