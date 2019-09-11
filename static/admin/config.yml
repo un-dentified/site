@@ -10,7 +10,7 @@ public_folder: /img
 collections:
   - name: "about"
     label: "about"
-    folder: "content/about"
+    folder: "src/content/about"
     create: false
     delete: false
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
@@ -25,7 +25,7 @@ collections:
       - { label: "Body", name: "body", widget: "markdown", required: true }
   - name: "music"
     label: "music"
-    folder: "content/music"
+    folder: "src/content/music"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
@@ -39,7 +39,7 @@ collections:
       - {label: "Apple Music link", name: "Apple Music link", widget: "string", required: true}
   - name: "shows"
     label: "shows"
-    folder: "content/shows"
+    folder: "src/content/shows"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
