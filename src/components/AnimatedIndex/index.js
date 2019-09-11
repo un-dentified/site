@@ -10,11 +10,7 @@ const VideoAnimation = Loadable({
   },
 });
 
-export default class AnimatedIndex extends Component {
-
-
-
- 
+export default class AnimatedIndex extends Component { 
   render() {
     return (
       <div className={styles.wrapper}>

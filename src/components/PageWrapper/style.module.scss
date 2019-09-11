@@ -133,9 +133,13 @@
 
 .content {
   grid-column: 1/-1;
-  grid-row: 1/-1;
+  grid-row: 1 / span 3;
   position: relative;
-  background: red;
+  background: black;
+  & > * {
+    height: 100%;
+    overflow: auto;
+  }
 }
 
 .toggle {
@@ -239,11 +243,6 @@
 }
 
 @media (max-height: 300px), (max-width: 300px) {
-  .container {
-    overflow: auto;
-    grid-template-rows: 3rem 1fr 1fr 3rem;
-  }
-
   .link {
     p {
       font-size: 1rem;

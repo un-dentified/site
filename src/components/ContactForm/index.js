@@ -56,7 +56,7 @@ export default class Contact extends Component {
           {
             opacity: 1,
           },
-          "start+=0.5"
+          "start+=0.3"
         )
         master.add(tl)
       } else {
@@ -64,7 +64,7 @@ export default class Contact extends Component {
 
         tl.to(
           this.formRef.current,
-          0.1,
+          0.5,
           {
             opacity: 0,
           },
@@ -100,6 +100,7 @@ export default class Contact extends Component {
             ease: Power0.easeOut,
           }
         )
+
         master.add(tl, "start")
       })
     }
@@ -113,7 +114,7 @@ export default class Contact extends Component {
     const formOpenClass = this.state.formOpen ? `${styles.formOpen}` : ""
 
     return (
-      <div className={`${styles.wrapper} ${invertClass}`}>
+      <>
         <button
           tabIndex={0}
           ref={this.btnRef}
@@ -131,7 +132,8 @@ export default class Contact extends Component {
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={`${styles.btnIcon} ${formOpenClass}`}
+            className={`${styles.btnIcon} ${formOpenClass} 
+            ${invertClass}`}
             role="presentation"
             aria-describedby="btndesc"
             viewBox="0 0 97.67 97.67"
@@ -144,7 +146,7 @@ export default class Contact extends Component {
                 r="48"
                 fill="none"
                 stroke="white"
-                className={`${styles.circ} ${invertClass}`}
+                className={`${styles.circ}`}
                 stroke-miterlimit="10"
                 stroke-width="4"
               />
@@ -157,7 +159,7 @@ export default class Contact extends Component {
                 stroke="white"
                 stroke-miterlimit="10"
                 stroke-width="4"
-                className={`${styles.line} ${invertClass}`}
+                className={`${styles.line}`}
               />
               <line
                 x1="0.85"
@@ -183,7 +185,7 @@ export default class Contact extends Component {
             <Form invert={invert} toggleForm={this.toggleForm} />
           )}
         </div>
-      </div>
+      </>
     )
   }
 }

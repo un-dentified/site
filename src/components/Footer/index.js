@@ -94,32 +94,45 @@ const SpotifyLogo = ({ invert }) => (
   </a>
 )
 
-const MenuButton = ({ menuOpen }) => (
+const MenuButton = ({ menuOpen, invert }) => (
   <svg
-    id="spin"
+    id="Layer_1"
     data-name="Layer 1"
     xmlns="http://www.w3.org/2000/svg"
-    focusable={false}
-    viewBox="0 0 96 96"
+    viewBox="0 0 98.98 98.98"
+    className={`${styles.menuToggleBtn} ${menuOpen ? styles.menuOpen : ""} ${
+      invert ? styles.invert : ""
+    }`}
   >
-    <circle className={styles.circ} cx="48" cy="48" r="48" fill="black" />
-    <rect
-      x="48.5"
-      y="15"
-      width="3"
-      height="70"
-      transform="translate(-22.71 48) rotate(-45)"
+    <title>Untitled-1</title>
+    <circle
+      cx="49.49"
+      cy="49.49"
+      r="49"
       fill="#fff"
-      className={styles.rect}
+      stroke="#231f20"
+      stroke-miterlimit="10"
+      stroke-width=".98"
     />
-    <rect
-      x="48.5"
-      y="15"
-      width="3"
-      height="70"
-      transform="translate(48 118.71) rotate(-135)"
-      fill="#fff"
-      className={styles.rect}
+    <line
+      x1="11.99"
+      y1="49.49"
+      x2="86.99"
+      y2="49.49"
+      fill="none"
+      stroke="black"
+      stroke-miterlimit="10"
+      stroke-width="3.07"
+    />
+    <line
+      x1="49.49"
+      y1="86.99"
+      x2="49.49"
+      y2="11.99"
+      fill="none"
+      stroke="black"
+      stroke-miterlimit="10"
+      stroke-width="3.07"
     />
   </svg>
 )
@@ -138,12 +151,12 @@ export default ({ toggleMenu, menuOpen, invert }) => {
 
       <button
         onClick={toggleMenu}
-        className={`${styles.menuToggle} ${invertedClass} `}
+        className={`${styles.menuToggleWrapper} ${invertedClass} `}
       >
-        <MenuButton menuOpen={menuOpen} />
+        <MenuButton invert={invert} menuOpen={menuOpen} />
       </button>
 
-      <div className={styles.contactForm}>
+      <div className={`${styles.contactForm} ${invertedClass}`}>
         <ContactForm invert={invert} />
       </div>
     </footer>
