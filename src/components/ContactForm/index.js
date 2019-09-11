@@ -116,6 +116,7 @@ export default class Contact extends Component {
     return (
       <>
         <button
+          style={{ background: "transparent", border: "none" }}
           tabIndex={0}
           ref={this.btnRef}
           className={`${styles.button} ${formOpenClass} ${invertClass}`}
@@ -136,6 +137,8 @@ export default class Contact extends Component {
             ${invertClass}`}
             role="presentation"
             aria-describedby="btndesc"
+            width="0"
+            height="0"
             viewBox="0 0 97.67 97.67"
           >
             <desc id="btndesc">Click to open the contact form</desc>
