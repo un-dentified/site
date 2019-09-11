@@ -1,174 +1,25 @@
-import React, { Component, createRef } from "react"
-import {
-  Scene,
-  OrthographicCamera,
-  WebGLRenderer,
-  VideoTexture,
-  LinearFilter,
-  RGBFormat,
-  Mesh,
-  PlaneBufferGeometry,
-  MeshBasicMaterial,
-  ShaderMaterial,
-  WebGLRenderTarget,
-  Vector2,
-} from "three"
+import React, { Component } from "react"
 import styles from "./style.module.scss"
-import Footer from '../Footer'
-import videoSrc from "./intro.mp4"
+import Loadable from 'react-loadable';
 
-const fragmentShader = `uniform vec2 res;
-uniform sampler2D bufferTexture;
-uniform sampler2D videoTexture;
-uniform float time;
-void main() {
-  vec2 st = gl_FragCoord.xy / res;
-  vec2 uv = st;
 
-  vec4 sum = texture2D(bufferTexture, uv);
-  vec4 src = texture2D(videoTexture, uv);
-  sum.rgb = mix(sum.rbg, src.rgb, 0.02);
-  gl_FragColor = sum;
-   
- }
-`
-const vertexShader = `void main() {
-  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0 );
-  gl_Position = projectionMatrix * mvPosition;
-}`
+const VideoAnimation = Loadable({
+  loader: () => import('./VideoAnimation'),
+  loading() {
+    return null
+  },
+});
 
 export default class AnimatedIndex extends Component {
-  videoRef = createRef()
-  canvasRef = createRef()
-  animationFrameId
-  camera;
-  renderer;
-
-  componentWillUnmount() {
-    // to prevent mem leaks
-    cancelAnimationFrame(this.animationFrameId)
-    window.removeEventListener('resize', this.handleResize)
-  }
-
-  componentDidMount() {
 
 
-    const scene = new Scene()
-    const canvasEl = this.canvasRef.current
-
-    const width = window.innerWidth
-    const height = window.innerHeight
-
-     let camera = new OrthographicCamera(
-      width / -2,
-      width / 2,
-      height / 2,
-      height / -2,
-      1,
-      1000
-    )
-    camera.position.z = 2
-
-    let renderer = new WebGLRenderer({ canvas: canvasEl })
-    renderer.setClearColor(0x000,0)
-    renderer.autoClear = false
-    renderer.setSize(window.innerWidth, window.innerHeight)
-
-    const video = this.videoRef.current
-    const videoTexture = new VideoTexture(video)
-    videoTexture.minFilter = LinearFilter
-    videoTexture.magFilter = LinearFilter
-    videoTexture.format = RGBFormat
-
-    const bufferScene = new Scene()
-    let textureA = new WebGLRenderTarget(
-      window.innerWidth,
-      window.innerHeight,
-      {
-        minFilter: LinearFilter,
-        magFilter: LinearFilter,
-      }
-    )
-    let textureB = new WebGLRenderTarget(
-      window.innerWidth,
-      window.innerHeight,
-      { minFilter: LinearFilter, magFilter: LinearFilter }
-    )
-    const bufferMaterial = new ShaderMaterial({
-      uniforms: {
-        bufferTexture: { value: textureA.texture },
-        res: {
-          value: new Vector2(window.innerWidth, window.innerHeight),
-        },
-        videoTexture: { value: videoTexture },
-        time: { value: Math.random() * Math.PI * 2 + Math.PI },
-      },
-      fragmentShader,
-      vertexShader,
-    })
-    const plane = new PlaneBufferGeometry(window.innerWidth, window.innerHeight)
-    const bufferObject = new Mesh(plane, bufferMaterial)
-    bufferScene.add(bufferObject)
-
-    const finalMaterial = new MeshBasicMaterial({ map: textureB.texture })
-    const quad = new Mesh(plane, finalMaterial)
-
-    scene.add(quad)
-
- 
-    const recursiveAnimation = () => {
-      this.animationFrameId = requestAnimationFrame(recursiveAnimation)
-
-      renderer.setRenderTarget(textureB)
-      renderer.render(bufferScene, camera)
-
-      renderer.setRenderTarget(null)
-      renderer.clear()
-
-      var t = textureA
-      textureA = textureB
-      textureB = t
-
-      quad.material.map = textureB.texture
-      bufferMaterial.uniforms.bufferTexture.value = textureA.texture
-
-      bufferMaterial.uniforms.time.value += 0.9
-    
-      renderer.render(scene, camera)
-    }
-
-   this.handleResize = () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();  
-    renderer.setSize( window.innerWidth, window.innerHeight );
-
-
-    }
-
-    window.addEventListener('resize', this.handleResize)
-
-    recursiveAnimation()
-  }
 
  
   render() {
     return (
       <div className={styles.wrapper}>
-        <video
-          className={styles.visuallyHidden}
-          ref={this.videoRef} 
-          autoPlay
-          loop
-          muted
-          id="video1"
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support HTML5 video.
-        </video>
-        <canvas className={styles.canvas} ref={this.canvasRef}>
-          Please enable javascript to view animation
-        </canvas>
-        <svg id="Layer_1" role='presentation' className={styles.svg} data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="298.54" height="99.38" viewBox="0 0 298.54 99.38">
+      <VideoAnimation/>
+        <svg id="Layer_1" role='presentation' className={styles.svg} data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 298.54 99.38">
   <g>
     <path d="M71.29,40.64c2.07,2.31,4,4.51,6,6.66a3.23,3.23,0,0,1,.8,2.44c0,3.06,0,6.12,0,9.18,0,.9,0,1.8,0,3.07l13-3c.07-3.69.14-7.44.21-11.35,1.15.75,2.12,1.76,3.13,1.91s2.11-.51,3.37-.87c.11,1,.29,1.93.3,2.87,0,3.89.1,7.79.07,11.68,0,5.21-2.36,9.1-5,9.5s-5.48,1.46-8.23,2.15c-3.16.8-6.32,1.5-9.48,2.26-1.32.32-2.64.69-4.09,1.07Z" transform="translate(-0.73 0.11)" fill="#2a094e" stroke="#6f52a2" stroke-miterlimit="10" stroke-width="0.54"/>
     <path d="M78,34.21V45.3c-2.63-1.65-4.67-4.31-6.43-7.73a3.6,3.6,0,0,1-.31-1.49c0-5,0-10,0-15.23l18.9-4.14c-1,3.57-1.6,6.82-3,9.4-1.15,2.08-2,4.72-3.63,5.79A11.41,11.41,0,0,1,81.62,33C80.48,33.49,79.31,33.79,78,34.21Z" transform="translate(-0.73 0.11)" fill="#2a094e" stroke="#6f52a2" stroke-miterlimit="10" stroke-width="0.54"/>
