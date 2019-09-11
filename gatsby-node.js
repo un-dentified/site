@@ -10,7 +10,6 @@ exports.createPages = ({ actions: { createPage }, graphql, reporter }) => {
     query MyQuery {
       music: allMarkdownRemark(
         filter: { frontmatter: { Type: { eq: "music" } } }
-        sort: { fields: [frontmatter___date], order: DESC }
       ) {
         edges {
           node {
