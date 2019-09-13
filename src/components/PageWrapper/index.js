@@ -1,5 +1,4 @@
 import React, { Component, createRef } from "react"
-//import Link from "../Link"
 import styles from "./style.module.scss"
 import { TimelineMax } from "gsap"
 import Arrow from "../Arrow"

@@ -22,6 +22,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  text-decoration: none;
   width: 100%;
   padding: 8rem 0;
   background: black;
@@ -184,7 +185,7 @@
   }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 43.75em) {
   .container {
     grid-template-columns: 4rem 1fr 4rem;
   }
