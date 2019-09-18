@@ -48,7 +48,7 @@ collections:
     fields:
       - {label: "Type", name: "Type", widget: "hidden", default: "shows"}
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Publish Date", name: "date", widget: "datetime", format: "L" }
       - { label: "Image", name: "image", widget: "image", required: true }
       - { label: "Link", name: "link", widget: "string", required: true }
   
