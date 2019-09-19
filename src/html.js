@@ -3,13 +3,13 @@ import PropTypes from "prop-types"
 
 export default function HTML(props) {
   return (
-    <html {...props.htmlAttributes}>
+    <html lang="en" {...props.htmlAttributes}>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, minimun-scale=1, maximum-scale=1,user-scalable=no ,shrink-to-fit=yes"
+          content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no ,shrink-to-fit=yes"
         />
         <link rel="stylesheet" href="https://use.typekit.net/eyc7udq.css" />
         {props.headComponents}
@@ -20,7 +20,7 @@ export default function HTML(props) {
           This app works best with JavaScript enabled.
         </noscript>
         <div
-          key={`body`}
+          key="body"
           id="___gatsby"
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
