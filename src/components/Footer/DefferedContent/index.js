@@ -1,16 +1,21 @@
 import React from "react"
+import PropTypes from "prop-types"
 import styles from "./style.module.scss"
 import ContactForm from "../../ContactForm"
 
 const AppleLogo = ({ invert }) => (
-  <a className={`${styles.icon} ${invert}`}>
+  <a
+    href="https://music.apple.com/ca/artist/un-dentified/1449711558 "
+    className={`${styles.icon} ${invert}`}
+    aria-label="Open Apple Music"
+  >
     <svg
-      id="Layer_1"
-      data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       width="0"
       height="0"
       viewBox="0 0 98 98"
+      role="presentation"
+      focusable="false"
     >
       <path
         className={styles.path}
@@ -22,36 +27,45 @@ const AppleLogo = ({ invert }) => (
   </a>
 )
 
-const FaceBookLogo = ({ invert }) => (
-  <a className={`${styles.icon} ${invert}`}>
+const YoutubeLogo = ({ invert }) => (
+  <a
+    href="https://www.youtube.com/channel/UCxzo423rFh3laj9L0FRZQAw"
+    className={`${styles.icon} ${invert}`}
+    aria-label="Open Youtube"
+  >
     <svg
       id="Layer_1"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       width="0"
       height="0"
-      viewBox="0 0 98 99"
+      viewBox="0 0 98 98"
+      focusable="false"
+      role="presentation"
     >
       <path
         className={styles.path}
-        d="M89.81,1H10.19A9.26,9.26,0,0,0,1,10.28V90.72A9.26,9.26,0,0,0,10.19,100H50V56.69H37.75V44.31H50V38.13A18.51,18.51,0,0,1,68.38,19.56H80.63V31.94H68.38a6.18,6.18,0,0,0-6.13,6.19v6.18H80.63L77.56,56.69H62.25V100H89.81A9.26,9.26,0,0,0,99,90.72V10.28A9.26,9.26,0,0,0,89.81,1Z"
+        d="M98,22.15h0s-1-9.6-3.9-13.82c-3.73-5.55-7.9-5.58-9.82-5.9C70.58,1,50,1,50,1h0S29.39,1,15.68,2.42c-1.91.32-6.08.35-9.82,5.9C2.91,12.54,2,22.14,2,22.14S1,33.41,1,44.71V55.26C1,66.53,2,77.82,2,77.82s1,9.61,3.88,13.83c3.74,5.55,8.64,5.36,10.82,6C24.53,98.67,50,99,50,99s20.6,0,34.3-1.44c1.91-.33,6.09-.35,9.82-5.91C97.06,87.43,98,77.83,98,77.83s1-11.27,1-22.56V44.71C99,33.44,98,22.15,98,22.15ZM39.86,68.08V28.92L66.33,48.57Z"
         transform="translate(-1 -1)"
-        fill="white"
+        fill="#f1f2f2"
       />
     </svg>
   </a>
 )
 
 const InstaLogo = ({ invert }) => (
-  <a className={`${styles.icon} ${invert}`}>
+  <a
+    href="https://instagram.com/officialunidentified?igshid=pt7e3xjxnogd"
+    className={`${styles.icon} ${invert}`}
+    aria-label="Open Instagram"
+  >
     <svg
-      id="Layer_1"
-      data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
-      className={styles.icon}
       width="0"
       height="0"
       viewBox="0 0 98 98"
+      role="presentation"
+      focusable="false"
     >
       <g>
         <path
@@ -78,15 +92,18 @@ const InstaLogo = ({ invert }) => (
 )
 
 const SpotifyLogo = ({ invert }) => (
-  <a className={`${styles.icon} ${invert}`}>
+  <a
+    href="https://open.spotify.com/artist/4vPqYPVLwUrooOL3Pylp8Q?si=sEYZtx8dQxCJlltzRQh5lw"
+    className={`${styles.icon} ${invert}`}
+    aria-label="Open Spotify"
+  >
     <svg
-      id="Layer_1"
-      data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
-      className={styles.icon}
       width="0"
       height="0"
       viewBox="0 0 98 98"
+      role="presentation"
+      focusable="false"
     >
       <path
         className={styles.path}
@@ -98,7 +115,7 @@ const SpotifyLogo = ({ invert }) => (
   </a>
 )
 
-const MenuButton = ({ menuOpen, invert, toggleMenu }) => (
+const MenuButton = ({ menuOpen, invert }) => (
   <svg
     id="Layer_1"
     data-name="Layer 1"
@@ -106,19 +123,20 @@ const MenuButton = ({ menuOpen, invert, toggleMenu }) => (
     viewBox="0 0 98.98 98.98"
     width="0"
     height="0"
+    role="presentation"
+    focuable="false"
     className={`${styles.menuToggleBtn} ${menuOpen ? styles.menuOpen : ""} ${
       invert ? styles.invert : ""
     }`}
   >
-    <title>Untitled-1</title>
     <circle
       cx="49.49"
       cy="49.49"
       r="49"
       fill="#fff"
       stroke="#231f20"
-      stroke-miterlimit="10"
-      stroke-width=".98"
+      strokeMiterlimit="10"
+      strokeWidth=".98"
     />
     <line
       x1="11.99"
@@ -127,8 +145,8 @@ const MenuButton = ({ menuOpen, invert, toggleMenu }) => (
       y2="49.49"
       fill="none"
       stroke="black"
-      stroke-miterlimit="10"
-      stroke-width="3.07"
+      strokeMiterlimit="10"
+      strokeWidth="3.07"
     />
     <line
       x1="49.49"
@@ -137,19 +155,19 @@ const MenuButton = ({ menuOpen, invert, toggleMenu }) => (
       y2="11.99"
       fill="none"
       stroke="black"
-      stroke-miterlimit="10"
-      stroke-width="3.07"
+      strokeMiterlimit="10"
+      strokeWidth="3.07"
     />
   </svg>
 )
 
-export default ({ menuOpen, invert, toggleMenu }) => {
-  const invertedClass = invert ? styles["invert"] : ""
+const DefferedFooterContent = ({ menuOpen, invert, toggleMenu }) => {
+  const invertedClass = invert ? styles.invert : ""
 
   return (
     <>
       <div className={styles.linksContainer}>
-        <FaceBookLogo invert={invertedClass} />
+        <YoutubeLogo invert={invertedClass} />
         <InstaLogo invert={invertedClass} />
         <AppleLogo invert={invertedClass} />
         <SpotifyLogo invert={invertedClass} />
@@ -158,6 +176,9 @@ export default ({ menuOpen, invert, toggleMenu }) => {
       <button
         onClick={toggleMenu}
         className={`${styles.menuToggleWrapper} ${invertedClass} `}
+        aria-label="Toggle Menu"
+        aria-haspopup="true"
+        aria-expanded={menuOpen}
       >
         <MenuButton invert={invert} menuOpen={menuOpen} />
       </button>
@@ -168,3 +189,11 @@ export default ({ menuOpen, invert, toggleMenu }) => {
     </>
   )
 }
+
+DefferedFooterContent.propTypes = {
+  menuOpen: PropTypes.bool.isRequired,
+  invert: PropTypes.bool.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+}
+
+export default DefferedFooterContent

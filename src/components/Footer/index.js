@@ -1,16 +1,17 @@
 import React from "react"
+import PropTypes from "prop-types"
 import styles from "./style.module.scss"
-import Loadable from "react-loadable"
+import loadable from "react-loadable"
 
-const FooterContent = Loadable({
+const FooterContent = loadable({
   loader: () => import("./DefferedContent"),
   loading() {
     return null
   },
 })
 
-export default ({ toggleMenu, menuOpen, invert }) => {
-  const invertedClass = invert ? styles["invert"] : ""
+const Footer = ({ toggleMenu, menuOpen, invert }) => {
+  const invertedClass = invert ? styles.invert : ""
 
   return (
     <footer className={`${styles.footer} ${invertedClass}`}>
@@ -22,3 +23,11 @@ export default ({ toggleMenu, menuOpen, invert }) => {
     </footer>
   )
 }
+
+Footer.propTypes = {
+  toggleMenu: PropTypes.func.isRequired,
+  menuOpen: PropTypes.bool.isRequired,
+  invert: PropTypes.bool.isRequired,
+}
+
+export default Footer

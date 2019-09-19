@@ -68,24 +68,46 @@
 
 // Wrapper for the contact form/button
 .contactForm {
-  display: inline-block;
-  border: 1px solid white;
+  display: flex;
+  justify-content: flex-end;
+  flex: 0 1 20rem;
   background: black;
 
   &.invert {
-    border: 1px solid black;
     background: white;
-  }
-}
-
-@media only screen and (max-width: 18.75em) {
-  .contactForm {
-    display: none;
   }
 }
 
 @media only screen and (max-width: 43.75em) {
   .menuToggleBtn {
-    display: block;
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .menuToggleWrapper {
+    transform: translateY(-2.5rem);
+  }
+
+  .contactForm {
+    flex: 0 1 15rem;
+  }
+
+  .linksContainer {
+    flex: 0 1 15rem;
+
+    .icon {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+@media only screen and (max-width: 18.75em) {
+  .contactForm {
+    display: none;
+  }
+
+  .menuToggleWrapper {
+    transform: none;
   }
 }
