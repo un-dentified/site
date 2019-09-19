@@ -8,11 +8,15 @@ export default class Form extends Component {
   lastInputRef = createRef()
 
   componentDidMount() {
-    window.addEventListener("keydown", this.focusTrap)
+    if (typeof window !== undefined) {
+      window.addEventListener("keydown", this.focusTrap)
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.focusTrap)
+    if (typeof window !== undefined) {
+      window.removeEventListener("keydown", this.focusTrap)
+    }
   }
 
   focusTrap = event => {

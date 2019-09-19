@@ -119,17 +119,18 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    if (window) {
+    if (typeof window !== undefined) {
       TweenLite.set(this.containerRef.current, {
         height: `${window.innerHeight}px`,
       })
+      window.addEventListener("resize", this.handleResize)
     }
-
-    window.addEventListener("resize", this.handleResize)
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize)
+    if (typeof winodw !== undefined) {
+      window.removeEventListener("resize", this.handleResize)
+    }
   }
 
   render() {

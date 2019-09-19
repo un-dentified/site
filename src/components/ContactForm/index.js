@@ -36,11 +36,15 @@ export default class Contact extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("keydown", this.focusTrap)
+    if (typeof window !== undefined) {
+      window.addEventListener("keydown", this.focusTrap)
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.focusTrap)
+    if (typeof window !== undefined) {
+      window.removeEventListener("keydown", this.focusTrap)
+    }
   }
 
   componentDidUpdate(_, prevState, snapshot) {

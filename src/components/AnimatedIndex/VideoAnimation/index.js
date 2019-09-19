@@ -44,98 +44,103 @@ export default class VideoAnimation extends Component {
   renderer
 
   componentDidMount() {
-    const scene = new Scene()
-    const canvasEl = this.canvasRef.current
+    if (typeof window !== undefined) {
+      const scene = new Scene()
+      const canvasEl = this.canvasRef.current
 
-    const width = window.innerWidth
-    const height = window.innerHeight
+      const width = window.innerWidth
+      const height = window.innerHeight
 
-    const camera = new OrthographicCamera(
-      width / -2,
-      width / 2,
-      height / 2,
-      height / -2,
-      1,
-      1000
-    )
-    camera.position.z = 2
+      const camera = new OrthographicCamera(
+        width / -2,
+        width / 2,
+        height / 2,
+        height / -2,
+        1,
+        1000
+      )
+      camera.position.z = 2
 
-    const renderer = new WebGLRenderer({ canvas: canvasEl })
-    renderer.setClearColor(0x000, 0)
-    renderer.autoClear = false
-    renderer.setSize(window.innerWidth, window.innerHeight)
-
-    const video = this.videoRef.current
-    const videoTexture = new VideoTexture(video)
-    videoTexture.minFilter = LinearFilter
-    videoTexture.magFilter = LinearFilter
-    videoTexture.format = RGBFormat
-
-    const bufferScene = new Scene()
-    let textureA = new WebGLRenderTarget(
-      window.innerWidth,
-      window.innerHeight,
-      {
-        minFilter: LinearFilter,
-        magFilter: LinearFilter,
-      }
-    )
-    let textureB = new WebGLRenderTarget(
-      window.innerWidth,
-      window.innerHeight,
-      { minFilter: LinearFilter, magFilter: LinearFilter }
-    )
-    const bufferMaterial = new ShaderMaterial({
-      uniforms: {
-        bufferTexture: { value: textureA.texture },
-        res: {
-          value: new Vector2(window.innerWidth, window.innerHeight),
-        },
-        videoTexture: { value: videoTexture },
-        time: { value: Math.random() * Math.PI * 2 + Math.PI },
-      },
-      fragmentShader,
-      vertexShader,
-    })
-    const plane = new PlaneBufferGeometry(window.innerWidth, window.innerHeight)
-    const bufferObject = new Mesh(plane, bufferMaterial)
-    bufferScene.add(bufferObject)
-
-    const finalMaterial = new MeshBasicMaterial({ map: textureB.texture })
-    const quad = new Mesh(plane, finalMaterial)
-
-    scene.add(quad)
-
-    const recursiveAnimation = () => {
-      this.animationFrameId = requestAnimationFrame(recursiveAnimation)
-
-      renderer.setRenderTarget(textureB)
-      renderer.render(bufferScene, camera)
-
-      renderer.setRenderTarget(null)
-      renderer.clear()
-
-      const t = textureA
-      textureA = textureB
-      textureB = t
-
-      quad.material.map = textureB.texture
-      bufferMaterial.uniforms.bufferTexture.value = textureA.texture
-
-      bufferMaterial.uniforms.time.value += 0.9
-
-      renderer.render(scene, camera)
-    }
-
-    this.handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight
-      camera.updateProjectionMatrix()
+      const renderer = new WebGLRenderer({ canvas: canvasEl })
+      renderer.setClearColor(0x000, 0)
+      renderer.autoClear = false
       renderer.setSize(window.innerWidth, window.innerHeight)
+
+      const video = this.videoRef.current
+      const videoTexture = new VideoTexture(video)
+      videoTexture.minFilter = LinearFilter
+      videoTexture.magFilter = LinearFilter
+      videoTexture.format = RGBFormat
+
+      const bufferScene = new Scene()
+      let textureA = new WebGLRenderTarget(
+        window.innerWidth,
+        window.innerHeight,
+        {
+          minFilter: LinearFilter,
+          magFilter: LinearFilter,
+        }
+      )
+      let textureB = new WebGLRenderTarget(
+        window.innerWidth,
+        window.innerHeight,
+        { minFilter: LinearFilter, magFilter: LinearFilter }
+      )
+      const bufferMaterial = new ShaderMaterial({
+        uniforms: {
+          bufferTexture: { value: textureA.texture },
+          res: {
+            value: new Vector2(window.innerWidth, window.innerHeight),
+          },
+          videoTexture: { value: videoTexture },
+          time: { value: Math.random() * Math.PI * 2 + Math.PI },
+        },
+        fragmentShader,
+        vertexShader,
+      })
+      const plane = new PlaneBufferGeometry(
+        window.innerWidth,
+        window.innerHeight
+      )
+      const bufferObject = new Mesh(plane, bufferMaterial)
+      bufferScene.add(bufferObject)
+
+      const finalMaterial = new MeshBasicMaterial({ map: textureB.texture })
+      const quad = new Mesh(plane, finalMaterial)
+
+      scene.add(quad)
+
+      const recursiveAnimation = () => {
+        this.animationFrameId = requestAnimationFrame(recursiveAnimation)
+
+        renderer.setRenderTarget(textureB)
+        renderer.render(bufferScene, camera)
+
+        renderer.setRenderTarget(null)
+        renderer.clear()
+
+        const t = textureA
+        textureA = textureB
+        textureB = t
+
+        quad.material.map = textureB.texture
+        bufferMaterial.uniforms.bufferTexture.value = textureA.texture
+
+        bufferMaterial.uniforms.time.value += 0.9
+
+        renderer.render(scene, camera)
+      }
+
+      this.handleResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight
+        camera.updateProjectionMatrix()
+        renderer.setSize(window.innerWidth, window.innerHeight)
+      }
+
+      window.addEventListener("resize", this.handleResize)
+
+      recursiveAnimation()
     }
-
-    window.addEventListener("resize", this.handleResize)
-
-    recursiveAnimation()
   }
 
   render() {

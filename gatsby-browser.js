@@ -3,4 +3,6 @@ import "typeface-montserrat"
 import "typeface-merriweather"
 import "./src/scss/base/base.scss"
 
-document.body.style.height = `${window.innerHeight}px`
+if (typeof winodw !== undefined) {
+  document.body.style.height = `${window.innerHeight}px`
+}
