@@ -1,7 +1,12 @@
-import React, { Component } from "react"
-import { error } from "util"
+import { Component } from "react"
+import PropTypes, { func } from "prop-types"
 
 export default class FormLogic extends Component {
+  static propTypes = {
+    initialValues: PropTypes.object.isRequired,
+    validators: PropTypes.objectOf(func),
+  }
+
   state = Object.keys(this.props.initialValues).reduce(
     (acc, current) => {
       acc.visited[current] = false
@@ -15,7 +20,6 @@ export default class FormLogic extends Component {
       touched: {},
       values: {},
       errors: {},
-      submitting: false,
     }
   )
 
@@ -51,13 +55,9 @@ export default class FormLogic extends Component {
             res(
               this.props.validators[`${name}`](this.state.values, this.setError)
             )
-          )
-            .then(error => {
-              this.setError(name, error)
-            })
-            .catch(e => {
-              console.warn(e.message)
-            })
+          ).then(err => {
+            this.setError(name, err)
+          })
         }
       }
     )
@@ -87,25 +87,21 @@ export default class FormLogic extends Component {
             res(
               this.props.validators[`${name}`](this.state.values, this.setError)
             )
-          )
-            .then(error => {
-              this.setError(name, error)
-            })
-            .catch(e => {
-              console.warn(e.message)
-            })
+          ).then(err => {
+            this.setError(name, err)
+          })
         }
       }
     )
   }
 
-  setError = (field, error) => {
+  setError = (field, err) => {
     this.setState(prevState => {
       return {
         ...prevState,
         errors: {
           ...prevState.errors,
-          [field]: error,
+          [field]: err,
         },
       }
     })
@@ -144,11 +140,8 @@ export default class FormLogic extends Component {
           }, {}),
         },
         () => {
-          console.log(this.state.errors)
           if (Object.keys(this.state.errors).length === 0) {
-            this.props.submitFn(this.state.values)
-          } else {
-            console.warn("clear errors before submitting")
+            this.props.submitFn(this.state.values, this.setError)
           }
         }
       )
