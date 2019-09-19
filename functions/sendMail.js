@@ -9,19 +9,17 @@ const mg = mailgun({
   domain: process.env.MAILGUN_DOMAIN,
 })
 
-const successCode = 200
-const errorCode = 400
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "Content-Type",
 }
 
-exports.handler = function(event, context, callback) {
-  let data = JSON.parse(event.body)
+const handler = (event, _, callback) => {
+  const data = JSON.parse(event.body)
 
-  let { name, email, subject, message } = data
+  const { name, email, subject, message } = data
 
-  let mailOptions = {
+  const mailOptions = {
     from: `${name} <${email}>`,
     to: "shawnsangha9@gmail.com",
     replyTo: email,
@@ -29,21 +27,31 @@ exports.handler = function(event, context, callback) {
     text: `${message}`,
   }
 
+  if (!name || !email || !subject || !message) {
+    callback(null, {
+      statusCode: 422,
+      headers,
+      body: JSON.stringify({ error: "Invalid form data" }),
+    })
+  }
+
   mg.messages().send(mailOptions, (error, body) => {
     if (error) {
-      console.log(error)
       callback(null, {
-        statusCode: errorCode,
+        statusCode: 400,
         headers,
-        body: JSON.stringify(error),
+        body: JSON.stringify({
+          error: "Error with mail service try again later",
+        }),
       })
     } else {
-      console.log(body)
       callback(null, {
-        statusCode: successCode,
+        statusCode: 200,
         headers,
         body: JSON.stringify(body),
       })
     }
   })
 }
+
+exports.handler = handler
