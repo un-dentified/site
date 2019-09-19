@@ -3,14 +3,7 @@
 @import "../../scss//variables/colors.scss";
 
 .container {
-  position: fixed;
-  max-width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: grid;
-  max-height: 100%;
   grid-template-columns: 5rem 1fr 5rem;
   grid-template-rows: 7rem 1fr 1fr 7rem;
   opacity: 1;
@@ -24,7 +17,7 @@
   justify-content: space-between;
   text-decoration: none;
   width: 100%;
-  padding: 8rem 0;
+  padding: 10rem 0;
   background: black;
   z-index: 0;
   position: relative;
@@ -137,9 +130,11 @@
   grid-row: 1 / span 3;
   position: relative;
   background: black;
+
   & > * {
     height: 100%;
     overflow: auto;
+    pointer-events: all;
   }
 }
 
@@ -232,10 +227,10 @@
     }
   }
 }
-@media (max-height: 800px) {
+@media (max-height: 43.75em) {
   .link {
     p {
-      font-size: 3rem;
+      font-size: 1.5rem;
     }
     .arrow {
       display: none;
@@ -243,8 +238,10 @@
   }
 }
 
-@media (max-height: 300px), (max-width: 300px) {
+@media (max-height: 25em), (max-width: 18.75em) {
   .link {
+    justify-content: center;
+    padding: 0;
     p {
       font-size: 1rem;
     }

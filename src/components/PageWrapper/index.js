@@ -1,12 +1,13 @@
 import React, { Component, createRef } from "react"
+import PropTypes from "prop-types"
 import styles from "./style.module.scss"
-import { TimelineMax } from "gsap"
+import { TimelineMax, TweenLite } from "gsap"
 import Arrow from "../Arrow"
 import Footer from "../Footer"
 import { throttle } from "lodash"
-import Loadable from "react-loadable"
+import loadable from "react-loadable"
 
-const Link = Loadable({
+const Link = loadable({
   loader: () => import("../Link"),
   loading() {
     return <span />
@@ -14,6 +15,17 @@ const Link = Loadable({
 })
 
 export default class Index extends Component {
+  static propTypes = {
+    defaultLinks: PropTypes.arrayOf(PropTypes.string).isRequired,
+    currentPage: PropTypes.string.isRequired,
+    invertLinkColor: PropTypes.bool,
+    entry: PropTypes.shape({
+      prevLinks: PropTypes.arrayOf(PropTypes.string).isRequired,
+      prevPage: PropTypes.string.isRequired,
+      direction: PropTypes.number.isRequired,
+    }),
+  }
+
   currentTimeOut
   containerRef = createRef()
 
@@ -26,7 +38,6 @@ export default class Index extends Component {
     this.handleResize = throttle(this.handleResize, 200)
 
     this.state = {
-      interactive: false,
       menuOpen: true,
       links:
         prevLinks && direction != null
@@ -50,7 +61,7 @@ export default class Index extends Component {
     }
   }
 
-  toggleMenu = cbScene => {
+  toggleMenu = () => {
     this.setState(
       prevState => {
         return {
@@ -60,7 +71,21 @@ export default class Index extends Component {
       () => {
         const tl = new TimelineMax()
 
-        if (!this.state.menuOpen) {
+        if (this.state.menuOpen) {
+          tl.to("#spin", 0.5, {
+            rotation: "0",
+          }).staggerTo(
+            `.${styles.link}`,
+            0.15,
+            {
+              cycle: {
+                scaleX: [1],
+              },
+            },
+            0,
+            "-=0.2"
+          )
+        } else {
           tl.to("#spin", 0.5, {
             rotation: "45",
           }).staggerTo(
@@ -75,26 +100,16 @@ export default class Index extends Component {
             0,
             "-=0.2"
           )
-        } else {
-          tl.to("#spin", 0.5, {
-            rotation: "0",
-          }).staggerTo(
-            `.${styles.link}`,
-            0.15,
-            {
-              cycle: {
-                scaleX: [1],
-              },
-            },
-            0,
-            "-=0.2"
-          )
         }
       }
     )
   }
 
   handleResize = () => {
+    TweenLite.set(this.containerRef.current, {
+      height: `${window.innerHeight}px`,
+    })
+
     this.setState(prevState => {
       if (!prevState.menuOpen) {
         this.toggleMenu()
@@ -104,6 +119,10 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
+    TweenLite.set(this.containerRef.current, {
+      height: `${window.innerHeight}px`,
+    })
+
     window.addEventListener("resize", this.handleResize)
   }
 
@@ -115,7 +134,7 @@ export default class Index extends Component {
     const { currentPage, children, invertLinkColor } = this.props
     const { links, menuOpen } = this.state
 
-    const invert = invertLinkColor ? `${styles["invert"]}` : ""
+    const invert = invertLinkColor ? `${styles.invert}` : ""
 
     return (
       <div ref={this.containerRef} className={`${styles.container} `}>
