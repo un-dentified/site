@@ -50,7 +50,7 @@ export default class VideoAnimation extends Component {
     const width = window.innerWidth
     const height = window.innerHeight
 
-    let camera = new OrthographicCamera(
+    const camera = new OrthographicCamera(
       width / -2,
       width / 2,
       height / 2,
@@ -60,7 +60,7 @@ export default class VideoAnimation extends Component {
     )
     camera.position.z = 2
 
-    let renderer = new WebGLRenderer({ canvas: canvasEl })
+    const renderer = new WebGLRenderer({ canvas: canvasEl })
     renderer.setClearColor(0x000, 0)
     renderer.autoClear = false
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -115,7 +115,7 @@ export default class VideoAnimation extends Component {
       renderer.setRenderTarget(null)
       renderer.clear()
 
-      var t = textureA
+      const t = textureA
       textureA = textureB
       textureB = t
 
