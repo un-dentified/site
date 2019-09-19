@@ -1,9 +1,14 @@
 import React, { Component, createRef } from "react"
 import Form from "./form"
+import PropTypes from "prop-types"
 import styles from "./style.module.scss"
 import { TimelineLite, Power0 } from "gsap"
 
 export default class Contact extends Component {
+  static propTypes = {
+    invert: PropTypes.bool.isRequired,
+  }
+
   textRef = createRef()
   wrapperRef = createRef()
   btnRef = createRef()
@@ -19,7 +24,7 @@ export default class Contact extends Component {
     }))
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
+  getSnapshotBeforeUpdate(_, prevState) {
     if (prevState.formOpen !== this.state.formOpen) {
       return [
         this.wrapperRef.current.getBoundingClientRect(),
@@ -37,11 +42,11 @@ export default class Contact extends Component {
     window.removeEventListener("keydown", this.focusTrap)
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(_, prevState, snapshot) {
     if (snapshot && prevState.formOpen !== this.state.formOpen) {
       const master = new TimelineLite()
       master.addLabel("start")
-      let current = [this.wrapperRef.current, this.textRef.current]
+      const current = [this.wrapperRef.current, this.textRef.current]
 
       if (!this.state.formOpen) {
         this.btnRef.current.focus()
@@ -150,8 +155,8 @@ export default class Contact extends Component {
                 fill="none"
                 stroke="white"
                 className={`${styles.circ}`}
-                stroke-miterlimit="10"
-                stroke-width="4"
+                strokeMiterlimit="10"
+                strokeWidth="4"
               />
               <line
                 x1="48.83"
@@ -160,8 +165,8 @@ export default class Contact extends Component {
                 y2="0.83"
                 fill="none"
                 stroke="white"
-                stroke-miterlimit="10"
-                stroke-width="4"
+                strokeMiterlimit="10"
+                strokeWidth="4"
                 className={`${styles.line}`}
               />
               <line
@@ -171,8 +176,8 @@ export default class Contact extends Component {
                 y2="47.73"
                 fill="none"
                 stroke="white"
-                stroke-miterlimit="10"
-                stroke-width="4"
+                strokeMiterlimit="10"
+                strokeWidth="4"
                 className={`${styles.line} ${invertClass}`}
               />
             </g>
@@ -182,8 +187,8 @@ export default class Contact extends Component {
         <div
           ref={this.wrapperRef}
           className={`${styles.formWrapper} ${invertClass} ${formOpenClass} `}
-        ></div>
-        <div ref={this.formRef} className={styles.form}>
+        />
+        <div ref={this.formRef} className={`${styles.form} ${formOpenClass}`}>
           {this.state.formOpen && (
             <Form invert={invert} toggleForm={this.toggleForm} />
           )}
