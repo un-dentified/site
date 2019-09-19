@@ -119,9 +119,11 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    TweenLite.set(this.containerRef.current, {
-      height: `${window.innerHeight}px`,
-    })
+    if (window) {
+      TweenLite.set(this.containerRef.current, {
+        height: `${window.innerHeight}px`,
+      })
+    }
 
     window.addEventListener("resize", this.handleResize)
   }
