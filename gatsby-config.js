@@ -12,11 +12,18 @@ module.exports = {
       })
     )
   },
+  pathPrefix: "/",
   siteMetadata: {
-    title: `Offical Unidentified Site`,
-    author: `Shawn Sangha`,
-    description: `Offical website for Unidentified`,
-    siteUrl: `https://officialunidentified.com`,
+    siteUrl: "https://officialunidentified.com/",
+    pathPrefix: "/",
+    title: "Official site of Unidentified",
+    titleAlt: "Official site of Unidentified",
+    description: "Home of Vancouver based rap trio Unidentified",
+    banner: "/static/img/logo.svg",
+    headline: "Unidentified",
+    siteLanguage: "en",
+    author: "Shawn Sangha",
+    twitter: "offunidentified",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -69,6 +76,8 @@ module.exports = {
         ],
       },
     },
+    "gatsby-plugin-sitemap",
+
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -81,9 +90,9 @@ module.exports = {
         icon: `content/assets/gatsby-icon.png`,
       },
     },
-    `gatsby-plugin-offline`,
     "gatsby-plugin-transition-link",
     "gatsby-plugin-netlify-cms",
+    `gatsby-plugin-offline`,
     "gatsby-plugin-netlify",
   ],
 }
