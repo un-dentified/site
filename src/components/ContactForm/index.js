@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { Component, createRef } from "react"
 import Form from "./form"
 import PropTypes from "prop-types"
@@ -115,7 +116,7 @@ export default class Contact extends Component {
 
   render() {
     const { invert } = this.props
-    const invertClass = invert ? styles["invert"] : ""
+    const invertClass = invert ? styles.invert : ""
     const formOpenClass = this.state.formOpen ? `${styles.formOpen}` : ""
 
     return (
