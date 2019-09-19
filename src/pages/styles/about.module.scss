@@ -3,7 +3,7 @@
   background: black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  overflow: auto;
 }
 
 .pageContent {
@@ -12,6 +12,7 @@
   align-content: center;
   justify-content: center;
   padding: 0 2rem;
+  margin: auto;
 }
 
 .header {
@@ -34,7 +35,6 @@
 
 @media only screen and (min-width: 43.75em) {
   .pageContent {
-    padding-top: 5rem 10rem;
     flex-direction: row;
     justify-content: center;
     width: 100%;
@@ -45,7 +45,7 @@
   }
 
   .header {
-    width: 25rem;
+    width: 20rem;
   }
   .textWrapper {
     padding-right: 3rem;
