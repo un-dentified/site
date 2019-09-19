@@ -1,7 +1,7 @@
 import React from "react"
 import TransitionLink from "gatsby-plugin-transition-link"
 import PropTypes from "prop-types"
-import { TimelineLite, TweenMax } from "gsap"
+import { TimelineLite } from "gsap"
 
 const animateIn = (
   node,
@@ -13,8 +13,6 @@ const animateIn = (
   }
 ) => {
   const tl = new TimelineLite()
-
-  console.log(node.firstChild.children[0], x, y)
 
   tl.fromTo(node.firstChild, length, { x, y }, { x: `-=${x}`, y: `-=${y}` })
 }
@@ -49,6 +47,7 @@ const Link = ({
 }) => (
   <TransitionLink
     className={className}
+    aria-label={`${to} page`}
     entry={{
       length,
       state: {
@@ -61,7 +60,6 @@ const Link = ({
         direction,
       },
       trigger: ({ node, entry }) => {
-        console.log("TRIG")
         animateIn(node, entry)
       },
     }}
