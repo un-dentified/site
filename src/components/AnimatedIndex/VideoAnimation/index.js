@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { Component, createRef } from "react"
 import {
   Scene,
@@ -45,6 +46,8 @@ export default class VideoAnimation extends Component {
 
   componentDidMount() {
     if (typeof window !== undefined) {
+      this.videoRef.current.muted = true
+
       const scene = new Scene()
       const canvasEl = this.canvasRef.current
 
@@ -62,6 +65,8 @@ export default class VideoAnimation extends Component {
       camera.position.z = 2
 
       const renderer = new WebGLRenderer({ canvas: canvasEl })
+
+      /*
       renderer.setClearColor(0x000, 0)
       renderer.autoClear = false
       renderer.setSize(window.innerWidth, window.innerHeight)
@@ -140,18 +145,18 @@ export default class VideoAnimation extends Component {
       window.addEventListener("resize", this.handleResize)
 
       recursiveAnimation()
+      */
     }
   }
 
   render() {
     return (
-      <div className={styles.wrapper}>
+      <div data-testid="video" className={styles.wrapper}>
         <video
           className={styles.visuallyHidden}
           ref={this.videoRef}
-          autoPlay
           loop
-          muted
+          autoPlay
           id="video1"
         >
           <source src={videoSrc} type="video/mp4" />
