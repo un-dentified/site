@@ -186,30 +186,30 @@ const Shows = props => {
 
 Shows.propTypes = {
   path: PropTypes.string.isRequired,
-  pageContext: {
+  pageContext: PropTypes.shape({
     currentPage: PropTypes.number.isRequired,
     numPages: PropTypes.number.isRequired,
-  },
-  data: {
-    shows: {
+  }),
+  data: PropTypes.shape({
+    shows: PropTypes.shape({
       edges: PropTypes.arrayOf(
         PropTypes.shape({
-          node: {
+          node: PropTypes.shape({
             id: PropTypes.string.isRequired,
-            frontmatter: {
+            frontmatter: PropTypes.shape({
               title: PropTypes.string.isRequired,
               date: PropTypes.string.isRequired,
-              image: {
-                childImageSharp: {
+              image: PropTypes.shape({
+                childImageSharp: PropTypes.shape({
                   fluid: PropTypes.object.isRequired,
-                },
-              },
-            },
-          },
+                }),
+              }),
+            }),
+          }),
         })
       ),
-    },
-  },
+    }),
+  }),
 }
 
 export default Shows
