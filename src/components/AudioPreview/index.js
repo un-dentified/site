@@ -15,9 +15,14 @@ export default class AudioPreview extends Component {
     id: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
     cover: PropTypes.shape({
-      childImageSharp: {
-        fluid: PropTypes.object.isRequired,
-      },
+      childImageSharp: PropTypes.shape({
+        fluid: PropTypes.shape({
+          aspectRatio: PropTypes.number.isRequired,
+          src: PropTypes.string.isRequired,
+          srcSet: PropTypes.string.isRequired,
+          sizes: PropTypes.string.isRequired,
+        }),
+      }),
     }),
   }
 
@@ -32,7 +37,6 @@ export default class AudioPreview extends Component {
   componentDidMount() {
     const player = this.playerRef.current
 
-    player.addEventListener("durationChange", this.handleDurationChange)
     player.addEventListener("canplay", this.handleCanPlay)
     player.addEventListener("timeupdate", this.updateTime)
     player.addEventListener("ended", this.handleEnd)
@@ -41,7 +45,6 @@ export default class AudioPreview extends Component {
   componentWillUnmount() {
     const player = this.playerRef.current
 
-    player.removeEventListener("durationChange", this.handleDurationChange)
     player.removeEventListener("canplay", this.handleCanPlay)
     player.removeEventListener("timeupdate", this.updateTime)
     player.removeEventListener("ended", this.handleEnd)
@@ -122,13 +125,21 @@ export default class AudioPreview extends Component {
 
     return (
       <>
-        <audio ref={this.playerRef} src={this.props.preview} />
-
+        <audio
+          ref={this.playerRef}
+          src={this.props.preview}
+          data-testid="audioPlayer"
+        />
         <div className={styles.playerContainer}>
           <div className={styles.player}>
             <h3 className={styles.title}>{title}</h3>
             {this.props.playing === this.props.id ? (
-              <button className={styles.toggle} onClick={this.pause}>
+              <button
+                aria-label="pause track"
+                className={styles.toggle}
+                onClick={this.pause}
+                data-testid="pauseBtn"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 99">
                   <circle
                     cx="49.5"
@@ -165,8 +176,10 @@ export default class AudioPreview extends Component {
             ) : (
               <button
                 className={styles.toggle}
-                disabled={!this.state.playable}
                 onClick={this.play}
+                disabled={!this.state.playable}
+                data-testid="playBtn"
+                aria-label="play track"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,21 +204,26 @@ export default class AudioPreview extends Component {
                   />
                 </svg>
               </button>
-            )}{" "}
+            )}
             <progress
               tabIndex={0}
               className={styles.progress}
               ref={this.progressBarRef}
               onClick={this.handleSeek}
               onKeyDown={this.handleKeyboardSeek}
-              value={this.state.progress}
+              value={`${this.state.progress}`}
               aria-valuenow={this.state.progress}
-              aria-valuemin={0}
-              aria-valuemax={100}
+              aria-valuemin="0"
+              aria-valuemax="100"
               max="100"
-            />{" "}
-            <ul className={styles.links}>
-              <a aria-label="Hear full song on Spotify" href={Spotify}>
+              data-testid="audioProgress"
+            />
+            <div className={styles.links}>
+              <a
+                data-testid="spotifyLink"
+                aria-label="Hear full song on Spotify"
+                href={Spotify}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={styles.icon}
@@ -221,7 +239,11 @@ export default class AudioPreview extends Component {
                   />
                 </svg>
               </a>
-              <a aria-label="Hear full song on Aplpe Music" href={Apple}>
+              <a
+                data-testid="appleMusicLink"
+                aria-label="Hear full song on Aplpe Music"
+                href={Apple}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={styles.icon}
@@ -237,9 +259,13 @@ export default class AudioPreview extends Component {
                   />
                 </svg>
               </a>
-            </ul>
+            </div>
           </div>
-          <Img className={styles.playerImg} fluid={fluid} />
+          <Img
+            data-testid="previewImage"
+            className={styles.playerImg}
+            fluid={fluid}
+          />
         </div>
       </>
     )
