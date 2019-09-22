@@ -8,11 +8,13 @@ import styles from "./styles/about.module.scss"
 
 const About = props => {
   const {
-    description,
-    image: {
-      childImageSharp: { fluid },
+    excerpt,
+    frontmatter: {
+      image: {
+        childImageSharp: { fluid },
+      },
     },
-  } = props.data.about.frontmatter
+  } = props.data.about
 
   return (
     <>
@@ -77,7 +79,7 @@ const About = props => {
                   </g>
                 </svg>
               </h1>
-              <p className={styles.aboutText}>{description}</p>
+              <p className={styles.aboutText}>{excerpt}</p>
             </div>
             <Image className={styles.aboutImg} fluid={fluid} />
           </section>
@@ -89,14 +91,16 @@ const About = props => {
 
 About.propTypes = {
   data: PropTypes.shape({
-    about: {
-      image: {
-        childImageSharp: {
-          fluid: PropTypes.object.isRequired,
-        },
-      },
-      description: PropTypes.string.isRequired,
-    },
+    about: PropTypes.shape({
+      excerpt: PropTypes.string,
+      frontmatter: PropTypes.shape({
+        image: PropTypes.shape({
+          childImageSharp: PropTypes.shape({
+            fluid: PropTypes.object.isRequired,
+          }),
+        }),
+      }),
+    }),
   }),
 }
 
@@ -104,7 +108,7 @@ export const query = graphql`
   query About {
     about: markdownRemark(frontmatter: { Type: { eq: "about" } }) {
       id
-      excerpt
+      excerpt(pruneLength: 10000)
       frontmatter {
         description
         image {
