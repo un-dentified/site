@@ -34,8 +34,6 @@ const YoutubeLogo = ({ invert }) => (
     aria-label="Open Youtube"
   >
     <svg
-      id="Layer_1"
-      data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       width="0"
       height="0"
@@ -117,8 +115,6 @@ const SpotifyLogo = ({ invert }) => (
 
 const MenuButton = ({ menuOpen, invert }) => (
   <svg
-    id="Layer_1"
-    data-name="Layer 1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 98.98 98.98"
     width="0"
