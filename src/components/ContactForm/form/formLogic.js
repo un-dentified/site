@@ -5,6 +5,13 @@ export default class FormLogic extends Component {
   static propTypes = {
     initialValues: PropTypes.object.isRequired,
     validators: PropTypes.objectOf(func),
+    children: PropTypes.func.isRequired,
+    submitFn: PropTypes.func,
+  }
+
+  static defaultProps = {
+    validators: {},
+    submitFn: () => {},
   }
 
   state = Object.keys(this.props.initialValues).reduce(
@@ -70,7 +77,6 @@ export default class FormLogic extends Component {
         if (prevState[event.target.name]) {
           return null
         }
-
         return {
           ...prevState,
           values: {
@@ -133,6 +139,7 @@ export default class FormLogic extends Component {
 
       this.setState(
         {
+          submitting: false,
           errors,
           touched: errorKeys.reduce((acc, key) => {
             acc[key] = true
@@ -153,12 +160,12 @@ export default class FormLogic extends Component {
       setVisited: this.setVisited,
       setDirty: this.setDirty,
       handleChange: this.handleChange,
-      customHandleChange: this.customHandleChange,
       handleSubmit: this.handleSubmit,
       values: this.state.values,
       errors: this.state.errors,
       touched: this.state.touched,
       visited: this.state.visited,
+      submitting: this.state.submitting,
     })
   }
 }
