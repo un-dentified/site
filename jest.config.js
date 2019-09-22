@@ -12,5 +12,11 @@ module.exports = {
     __PATH_PREFIX__: ``,
   },
   testURL: `http://localhost`,
-  setupFiles: [`<rootDir>/loadershim.js`, "<rootDir>/canvasMock.js"],
+  setupFiles: [
+    `<rootDir>/loadershim.js`,
+    "<rootDir>/setupTestFiles/canvasMock.js",
+    "<rootDir>/setupTestFiles/mediaMock.js",
+    "<rootDir>/setupTestFiles/fetchMock.js",
+  ],
+  setupFilesAfterEnv: ["<rootDir>/setupTestFiles/extendDomMatchers.js"],
 }
