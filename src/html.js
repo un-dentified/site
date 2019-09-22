@@ -9,7 +9,7 @@ export default function HTML(props) {
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no ,shrink-to-fit=yes"
+          content="width=device-width, initial-scale=1, maximum-scale=5,user-scalable=yes ,shrink-to-fit=yes"
         />
         <link rel="stylesheet" href="https://use.typekit.net/eyc7udq.css" />
         {props.headComponents}
