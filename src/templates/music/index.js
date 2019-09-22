@@ -129,8 +129,6 @@ export default class MusicPage extends Component {
                   to={prevPath}
                 >
                   <svg
-                    id="Layer_1"
-                    data-name="Layer 1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 94.15 94.15"
                   >
@@ -161,8 +159,6 @@ export default class MusicPage extends Component {
                   to={nextPath}
                 >
                   <svg
-                    id="Layer_1"
-                    data-name="Layer 1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 94.15 94.15"
                   >
@@ -191,26 +187,28 @@ MusicPage.propTypes = {
     currentPage: PropTypes.number.isRequired,
     numPages: PropTypes.number.isRequired,
   }),
-  data: {
-    allMarkdownRemark: PropTypes.arrayOf(
-      PropTypes.shape({
-        node: {
-          id: PropTypes.string.isRequired,
-          frontmatter: PropTypes.shape({
-            Apple: PropTypes.string.isRequired,
-            Spotify: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            preview: PropTypes.string.isRequired,
-            cover: {
-              childImageSharp: {
-                fluid: PropTypes.object.isRequired,
-              },
-            },
+  data: PropTypes.shape({
+    allMarkdownRemark: PropTypes.shape({
+      edges: PropTypes.arrayOf(
+        PropTypes.shape({
+          node: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            frontmatter: PropTypes.shape({
+              Apple: PropTypes.string.isRequired,
+              Spotify: PropTypes.string.isRequired,
+              title: PropTypes.string.isRequired,
+              preview: PropTypes.string.isRequired,
+              cover: PropTypes.shape({
+                childImageSharp: PropTypes.shape({
+                  fluid: PropTypes.object.isRequired,
+                }),
+              }),
+            }),
           }),
-        },
-      })
-    ),
-  },
+        })
+      ),
+    }),
+  }),
 }
 
 export const query = graphql`
