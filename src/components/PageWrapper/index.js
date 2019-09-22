@@ -20,9 +20,9 @@ export default class Index extends Component {
     currentPage: PropTypes.string.isRequired,
     invertLinkColor: PropTypes.bool,
     entry: PropTypes.shape({
-      prevLinks: PropTypes.arrayOf(PropTypes.string).isRequired,
-      prevPage: PropTypes.string.isRequired,
-      direction: PropTypes.number.isRequired,
+      prevLinks: PropTypes.arrayOf(PropTypes.string),
+      prevPage: PropTypes.string,
+      direction: PropTypes.number,
     }),
   }
 
