@@ -30,6 +30,10 @@
 
   &:focus {
     outline: none;
+
+    .btnIcon {
+      outline: 1px solid $color-purple-main;
+    }
   }
 }
 
