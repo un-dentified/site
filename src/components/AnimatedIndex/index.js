@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import styles from "./style.module.scss"
 import loadable from 'react-loadable';
 
@@ -10,12 +10,12 @@ const VideoAnimation = loadable({
   },
 });
 
-export default class AnimatedIndex extends Component { 
+const  AnimatedIndex = () => { 
 
-  render() {
+  
     return (
       <div className={styles.wrapper}>
-      <VideoAnimation/>
+     <VideoAnimation/>
         <svg  role='presentation' className={styles.svg} xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 298.54 99.38">
   <g>
     <path d="M71.29,40.64c2.07,2.31,4,4.51,6,6.66a3.23,3.23,0,0,1,.8,2.44c0,3.06,0,6.12,0,9.18,0,.9,0,1.8,0,3.07l13-3c.07-3.69.14-7.44.21-11.35,1.15.75,2.12,1.76,3.13,1.91s2.11-.51,3.37-.87c.11,1,.29,1.93.3,2.87,0,3.89.1,7.79.07,11.68,0,5.21-2.36,9.1-5,9.5s-5.48,1.46-8.23,2.15c-3.16.8-6.32,1.5-9.48,2.26-1.32.32-2.64.69-4.09,1.07Z" transform="translate(-0.73 0.11)" fill="#2a094e" stroke="#6f52a2" strokeMiterlimit="10" strokeWidth="0.54"/>
@@ -95,4 +95,6 @@ export default class AnimatedIndex extends Component {
       </div>
     )
   }
-}
+
+
+export default AnimatedIndex;
