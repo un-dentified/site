@@ -35,18 +35,6 @@ export default class Contact extends Component {
     return null
   }
 
-  componentDidMount() {
-    if (typeof window !== undefined) {
-      window.addEventListener("keydown", this.focusTrap)
-    }
-  }
-
-  componentWillUnmount() {
-    if (typeof window !== undefined) {
-      window.removeEventListener("keydown", this.focusTrap)
-    }
-  }
-
   componentDidUpdate(_, prevState, snapshot) {
     if (snapshot && prevState.formOpen !== this.state.formOpen) {
       const master = new TimelineLite()
