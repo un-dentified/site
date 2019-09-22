@@ -66,7 +66,6 @@ export default class VideoAnimation extends Component {
 
       const renderer = new WebGLRenderer({ canvas: canvasEl })
 
-      /*
       renderer.setClearColor(0x000, 0)
       renderer.autoClear = false
       renderer.setSize(window.innerWidth, window.innerHeight)
@@ -145,13 +144,12 @@ export default class VideoAnimation extends Component {
       window.addEventListener("resize", this.handleResize)
 
       recursiveAnimation()
-      */
     }
   }
 
   render() {
     return (
-      <div data-testid="video" className={styles.wrapper}>
+      <div data-testid="animated_home_vid" className={styles.wrapper}>
         <video
           className={styles.visuallyHidden}
           ref={this.videoRef}
