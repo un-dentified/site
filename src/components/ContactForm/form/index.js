@@ -1,9 +1,15 @@
 import React, { Component, createRef } from "react"
 import { TimelineMax } from "gsap"
 import FormLogic from "./formLogic"
+import PropTypes from "prop-types"
 import styles from "./style.module.scss"
 
 export default class Form extends Component {
+  static propTypes = {
+    toggleForm: PropTypes.func.isRequired,
+    invert: PropTypes.bool.isRequired,
+  }
+
   firstInputRef = createRef()
   lastInputRef = createRef()
 
@@ -132,7 +138,6 @@ export default class Form extends Component {
 
         if (res) {
           const last = new TimelineMax()
-
           last
             .to(`.${styles.check}`, 1, {
               opacity: 1,
@@ -194,6 +199,7 @@ export default class Form extends Component {
             onSubmit={handleSubmit}
             autoComplete="off"
             className={styles.formContainer}
+            data-testid="form"
           >
             {[
               { name: "name", type: "text" },
@@ -203,18 +209,17 @@ export default class Form extends Component {
             ].map((entry, index) => (
               <div
                 key={entry.name}
+                data-testid={`${entry.name}Field`}
                 className={`${styles.field} ${invertClass} ${
                   visited[entry.name] ? styles.visited : ""
                 } ${
                   errors[entry.name] && touched[entry.name] ? styles.error : ""
                 }`}
               >
-                <label autoComplete={false} className={styles.label}>
-                  {entry.name}
-                </label>
+                <label className={styles.label}>{entry.name}</label>
                 {entry.type === "textarea" ? (
                   <textarea
-                    autoComplete={false}
+                    autoComplete="false"
                     onFocus={setVisited}
                     onBlur={setDirty}
                     value={values[entry.name]}
@@ -223,31 +228,39 @@ export default class Form extends Component {
                     ref={this.lastInputRef}
                     name={entry.name}
                     className={styles.textarea}
+                    data-testid={entry.name}
                   />
                 ) : (
                   <input
                     onFocus={setVisited}
                     onBlur={setDirty}
                     value={values[entry.name]}
+                    autoComplete="false"
                     type={entry.type}
                     onChange={handleChange}
                     ref={index === 0 ? this.firstInputRef : null}
                     name={entry.name}
                     className={styles.input}
+                    data-testid={entry.name}
                   />
                 )}
                 <div className={`${styles.error} ${styles.errorMsg}`}>
-                  {touched[entry.name] && <p>{errors[entry.name]}</p>}
+                  {touched[entry.name] && (
+                    <p data-testid={`${entry.name}Error`}>
+                      {errors[entry.name]}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
             <div className={`${styles.errorMsg} ${styles.formErr}`}>
-              <p>{errors.form}</p>
+              <p data-testid="formError">{errors.form}</p>
             </div>
             <button
               aria-label="submit form"
               type="submit"
               className={styles.send}
+              data-testid="submitBtn"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -311,7 +324,10 @@ export default class Form extends Component {
                 </g>
               </svg>
             </button>
-            <div className={`${styles.confirm} ${invertClass}`} />
+            <div
+              data-testid="confirm"
+              className={`${styles.confirm} ${invertClass}`}
+            />
           </form>
         )}
       </FormLogic>
