@@ -7,7 +7,11 @@ import { TimelineLite, Power0 } from "gsap"
 
 export default class Contact extends Component {
   static propTypes = {
-    invert: PropTypes.bool.isRequired,
+    invert: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    invert: false,
   }
 
   textRef = createRef()
@@ -104,8 +108,6 @@ export default class Contact extends Component {
     }
   }
 
-  setVisited
-
   render() {
     const { invert } = this.props
     const invertClass = invert ? styles.invert : ""
@@ -121,6 +123,7 @@ export default class Contact extends Component {
           onClick={this.toggleForm}
           type="button"
           aria-label="click to open contact form"
+          data-testid="button"
         >
           <span
             ref={this.textRef}
@@ -183,7 +186,11 @@ export default class Contact extends Component {
         />
         <div ref={this.formRef} className={`${styles.form} ${formOpenClass}`}>
           {this.state.formOpen && (
-            <Form invert={invert} toggleForm={this.toggleForm} />
+            <Form
+              data-testid="form"
+              invert={invert}
+              toggleForm={this.toggleForm}
+            />
           )}
         </div>
       </>
