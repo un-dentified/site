@@ -115,6 +115,7 @@ export default class MusicPage extends Component {
             <div className={styles.navigationContainer}>
               {currentPage > 0 && (
                 <Link
+                  data-testid="prevPage"
                   exit={{
                     length: 0.5,
                     trigger: ({ exit, node }) =>
@@ -145,6 +146,7 @@ export default class MusicPage extends Component {
               )}
               {currentPage < numPages - 1 && (
                 <Link
+                  data-testid="nextPage"
                   exit={{
                     length: 0.5,
                     trigger: ({ exit, node }) =>
