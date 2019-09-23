@@ -52,11 +52,14 @@
   },
   "devDependencies": {
     "@reach/router": "^1.2.1",
+    "@testing-library/cypress": "^5.0.1",
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.1.4",
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby": "^0.2.14",
     "canvas": "^2.6.0",
+    "cypress": "^3.4.1",
+    "cypress-plugin-tab": "^1.0.3",
     "eslint": "^6.3.0",
     "eslint-config-kentcdodds": "^14.4.1",
     "eslint-plugin-cypress": "^2.6.1",
@@ -98,6 +101,7 @@
     "dev-lambda": "netlify-lambda serve functions",
     "build": "run-p build:**",
     "build:app": "gatsby build",
-    "build:lambda": "netlify-lambda build functions"
+    "build:lambda": "netlify-lambda build functions",
+    "cy:open": "cypress open"
   }
 }
