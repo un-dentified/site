@@ -14,6 +14,7 @@ export default class AudioPreview extends Component {
     title: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
     cover: PropTypes.shape({
       childImageSharp: PropTypes.shape({
         fluid: PropTypes.shape({
@@ -114,14 +115,17 @@ export default class AudioPreview extends Component {
 
   handleSeek = e => {
     const clickPosition = (e.pageX - e.target.offsetLeft) / e.target.offsetWidth
-    const clickTime = clickPosition * this.playerRef.current.duration
+
+    const clickTime = this.playerRef.current.duration
+      ? clickPosition * this.playerRef.current.duration
+      : 0
 
     this.playerRef.current.currentTime = clickTime
   }
 
   render() {
     const { fluid } = this.props.cover.childImageSharp
-    const { title, Apple, Spotify } = this.props
+    const { title, Apple, Spotify, index } = this.props
 
     return (
       <>
@@ -129,6 +133,7 @@ export default class AudioPreview extends Component {
           ref={this.playerRef}
           src={this.props.preview}
           data-testid="audioPlayer"
+          data-cy={`playerAudio${index}`}
         />
         <div className={styles.playerContainer}>
           <div className={styles.player}>
@@ -139,6 +144,8 @@ export default class AudioPreview extends Component {
                 className={styles.toggle}
                 onClick={this.pause}
                 data-testid="pauseBtn"
+                data-cy={`pauseBtn${index}`}
+                tabIndex={0}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 99">
                   <circle
@@ -180,10 +187,14 @@ export default class AudioPreview extends Component {
                 disabled={!this.state.playable}
                 data-testid="playBtn"
                 aria-label="play track"
+                data-cy={`playBtn${index}`}
+                tabIndex={0}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 99.57 99.57"
+                  focusable={false}
+                  role="presentation"
                 >
                   <circle
                     cx="49.79"
@@ -217,6 +228,7 @@ export default class AudioPreview extends Component {
               aria-valuemax="100"
               max="100"
               data-testid="audioProgress"
+              data-cy={`progress${index}`}
             />
             <div className={styles.links}>
               <a
