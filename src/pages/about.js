@@ -79,9 +79,15 @@ const About = props => {
                   </g>
                 </svg>
               </h1>
-              <p className={styles.aboutText}>{excerpt}</p>
+              <p data-testid="excerpt" className={styles.aboutText}>
+                {excerpt}
+              </p>
             </div>
-            <Image className={styles.aboutImg} fluid={fluid} />
+            <Image
+              alt="Photo of the group"
+              className={styles.aboutImg}
+              fluid={fluid}
+            />
           </section>
         </main>
       </PageWrapper>
