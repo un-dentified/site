@@ -121,6 +121,7 @@ const MenuButton = ({ menuOpen, invert }) => (
     height="0"
     role="presentation"
     focuable="false"
+    data-testid="buttonIcon"
     className={`${styles.menuToggleBtn} ${menuOpen ? styles.menuOpen : ""} ${
       invert ? styles.invert : ""
     }`}
@@ -162,7 +163,7 @@ const DefferedFooterContent = ({ menuOpen, invert, toggleMenu }) => {
 
   return (
     <>
-      <div className={styles.linksContainer}>
+      <div data-testid="footerContent" className={styles.linksContainer}>
         <YoutubeLogo invert={invertedClass} />
         <InstaLogo invert={invertedClass} />
         <AppleLogo invert={invertedClass} />
@@ -175,6 +176,7 @@ const DefferedFooterContent = ({ menuOpen, invert, toggleMenu }) => {
         aria-label="Toggle Menu"
         aria-haspopup="true"
         aria-expanded={menuOpen}
+        data-testid="menuButton"
       >
         <MenuButton invert={invert} menuOpen={menuOpen} />
       </button>
