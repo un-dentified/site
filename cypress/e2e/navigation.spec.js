@@ -1,4 +1,3 @@
-/* eslint-disable jest/valid-expect-in-promise */
 const baseUrl = "http://localhost:8000"
 
 describe("tests navigation", () =>
