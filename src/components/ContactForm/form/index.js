@@ -200,6 +200,7 @@ export default class Form extends Component {
             autoComplete="off"
             className={styles.formContainer}
             data-testid="form"
+            data-cy="contactForm"
           >
             {[
               { name: "name", type: "text" },
@@ -225,7 +226,6 @@ export default class Form extends Component {
                     value={values[entry.name]}
                     type={entry.type}
                     onChange={handleChange}
-                    ref={this.lastInputRef}
                     name={entry.name}
                     className={styles.textarea}
                     data-testid={entry.name}
@@ -261,6 +261,7 @@ export default class Form extends Component {
               type="submit"
               className={styles.send}
               data-testid="submitBtn"
+              ref={this.lastInputRef}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

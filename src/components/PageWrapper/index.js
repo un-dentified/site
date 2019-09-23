@@ -19,6 +19,7 @@ export default class Index extends Component {
   static propTypes = {
     defaultLinks: PropTypes.arrayOf(PropTypes.string).isRequired,
     currentPage: PropTypes.string.isRequired,
+    dataCy: PropTypes.string,
     invertLinkColor: PropTypes.bool,
     entry: PropTypes.shape({
       prevLinks: PropTypes.arrayOf(PropTypes.string),
@@ -28,6 +29,7 @@ export default class Index extends Component {
   }
 
   static defaultProps = {
+    dataCy: "",
     entry: {
       state: {
         prevLinks: null,
@@ -136,7 +138,11 @@ export default class Index extends Component {
     const invert = invertLinkColor ? `${styles.invert}` : ""
 
     return (
-      <div ref={this.containerRef} className={`${styles.container} `}>
+      <div
+        ref={this.containerRef}
+        data-cy={this.props.dataCy}
+        className={`${styles.container} `}
+      >
         <div className={styles.content}>{children}</div>
 
         <Footer

@@ -35,6 +35,7 @@ const Shows = props => {
         menuAccess={true}
         menuOpen={true}
         defaultLinks={["", "about", "music", "shop"]}
+        dataCy={`shows${currentPage}`}
       >
         <div className={styles.showsPage}>
           <div>

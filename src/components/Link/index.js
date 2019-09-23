@@ -48,6 +48,7 @@ const Link = ({
     className={className}
     aria-label={`${to} page`}
     data-testid={`link${direction}`}
+    data-cy={`${currentPage}PageLink${direction}`}
     entry={{
       length,
       state: {

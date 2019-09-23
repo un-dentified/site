@@ -47,6 +47,7 @@ export default class MusicPage extends Component {
           invertLinkColor
           menuOpen={true}
           defaultLinks={["", "about", "shop", "shows"]}
+          dataCy={`music${currentPage}`}
         >
           <div ref={this.contentRef} className={styles.musicPage}>
             <svg
@@ -96,9 +97,9 @@ export default class MusicPage extends Component {
             </svg>
 
             <div className={styles.content}>
-              {edges.map(edge => {
+              {edges.map((edge,index) => {
                 const {
-                  node: { id, frontmatter },
+                  node: { id, frontmatter }, 
                 } = edge
 
                 return (
@@ -108,6 +109,7 @@ export default class MusicPage extends Component {
                     {...frontmatter}
                     playing={this.state.playing}
                     setPlaying={this.setPlaying}
+                    index={index}
                   />
                 )
               })}

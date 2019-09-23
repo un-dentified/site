@@ -12,6 +12,7 @@ const Index = props => (
       menuAccess={false}
       menuOpen={true}
       defaultLinks={["shop", "about", "music", "shows"]}
+      dataCy="index"
     >
       <AnimatedIndex />
     </PageWrapper>

@@ -26,6 +26,7 @@ const About = props => {
         invertLinkColor
         menuOpen={true}
         defaultLinks={["", "shop", "music", "shows"]}
+        dataCy="about"
       >
         <main className={styles.aboutPage}>
           <section className={styles.pageContent}>

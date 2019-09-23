@@ -5,13 +5,14 @@ import styles from "./styles/shop.module.scss"
 
 const Shop = props => (
   <>
-  <Seo/>
+    <Seo />
     <PageWrapper
       {...props}
       currentPage="shop"
       menuAccess={true}
       menuOpen={true}
       defaultLinks={["", "about", "music", "shows"]}
+      dataCy="shop"
     >
       <header className={styles.header}>
         <svg

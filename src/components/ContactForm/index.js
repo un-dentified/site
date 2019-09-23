@@ -124,6 +124,7 @@ export default class Contact extends Component {
           type="button"
           aria-label="click to open contact form"
           data-testid="button"
+          data-cy="formToggle"
         >
           <span
             ref={this.textRef}
