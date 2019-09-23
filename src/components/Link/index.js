@@ -13,7 +13,6 @@ const animateIn = (
   }
 ) => {
   const tl = new TimelineLite()
-
   tl.fromTo(node.firstChild, length, { x, y }, { x: `-=${x}`, y: `-=${y}` })
 }
 
@@ -48,6 +47,7 @@ const Link = ({
   <TransitionLink
     className={className}
     aria-label={`${to} page`}
+    data-testid={`link${direction}`}
     entry={{
       length,
       state: {
