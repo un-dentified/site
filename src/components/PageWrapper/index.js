@@ -5,6 +5,7 @@ import { TimelineMax, TweenLite } from "gsap"
 import Arrow from "../Arrow"
 import Footer from "../Footer"
 import { throttle } from "lodash"
+import updateLinkOrder from "./utils/updateLinkOrder"
 import loadable from "react-loadable"
 
 const Link = loadable({
@@ -26,13 +27,23 @@ export default class Index extends Component {
     }),
   }
 
-  currentTimeOut
+  static defaultProps = {
+    entry: {
+      state: {
+        prevLinks: null,
+        prevPage: null,
+        direction: null,
+      },
+    },
+  }
+
   containerRef = createRef()
 
   constructor(props) {
     super(props)
 
     const { defaultLinks } = this.props
+
     const { prevLinks, prevPage, direction } = this.props.entry.state
 
     this.handleResize = throttle(this.handleResize, 200)
@@ -41,23 +52,8 @@ export default class Index extends Component {
       menuOpen: true,
       links:
         prevLinks && direction != null
-          ? this.updateLinkOrder(prevLinks, prevPage, direction, defaultLinks)
+          ? updateLinkOrder(prevLinks, prevPage, direction, defaultLinks)
           : defaultLinks,
-    }
-  }
-
-  updateLinkOrder = (prevLinks, prevPage, direction, defaultLinks) => {
-    switch (direction) {
-      case 0:
-        return [...prevLinks.slice(-3), prevPage]
-      case 1:
-        return [prevLinks[2], prevLinks[3], prevPage, prevLinks[0]]
-      case 2:
-        return [prevLinks[3], prevPage, prevLinks[0], prevLinks[1]]
-      case 3:
-        return [prevPage, ...prevLinks.slice(0, 3)]
-      default:
-        return defaultLinks
     }
   }
 
