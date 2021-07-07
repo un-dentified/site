@@ -1,0 +1,11 @@
+---
+Type: music
+title: Starlight
+date: 2020-03-14T07:00:00.000Z
+cover: /img/img_3342.jpg
+Spotify: >-
+  https://open.spotify.com/track/6rpCH5aD36w79ENEQvD1ru?si=qJ3FAixKT_yvufsryiHBFw
+Apple: 'https://music.apple.com/ca/album/starlight/1501114269?i=1501114270'
+preview: 'https://music.apple.com/ca/album/starlight/1501114269?i=1501114270'
+---
+
